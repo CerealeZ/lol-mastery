@@ -1,0 +1,56 @@
+.championDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fffffe;
+    gap: 25px;
+    min-height: 80vh;
+    padding: 10px;
+    font-family: RobotoNormal;
+  }
+  
+  .championDetails__bio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f5f2;
+    gap: 10px;
+    border-radius: 15px;
+    padding: 0 50px;
+  }
+  
+  .championDetails__bio__text {
+    color: #232323;
+  }
+  
+  .championDetails__bio__text--title {
+    text-decoration: underline;
+    text-align: center;
+  }
+  
+  .infoTable {
+    background-color: #f8f5f2;
+    border-spacing: 5px 15px;
+    padding: 30px;
+    border-radius: 20px;
+  }
+  .infoTable__caption {
+    background-color: #f8f5f2;
+    padding: 5px;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .tableHeader {
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #078080;
+    color: #fffffe;
+  }
+  
+  .tableCell {
+    padding: 10px;
+    border-radius: 15px;
+    color: #222525;
+    background-color: #fffffe;
+  }
+  

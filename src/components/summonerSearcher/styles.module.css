@@ -1,0 +1,39 @@
+.searchBox {
+  font-family: RobotoNormal;
+  display: flex;
+  padding: 15px;
+  gap: 10px;
+  background-color: #f8f5f2;
+}
+
+.searchBox__input {
+  padding: 10px;
+  border-radius: 15px;
+  border-width: 1px;
+  border-color:transparent;
+  background-color: #fffffe;
+}
+
+.searchBox__input:focus {
+  outline-color: #078080;
+}
+
+.searchBox__input--name {
+  width: 0;
+  flex-grow: 1;
+  /* flex-grow: 1; */
+}
+
+.searchBox__input--select {
+  border: none;
+  appearance: none;
+}
+
+.searchBox__input--button {
+  background-color: #078080;
+  color: #fffffe;
+}
+
+.searchBox__input--error {
+  border: 1px solid rgb(250, 54, 54);
+}

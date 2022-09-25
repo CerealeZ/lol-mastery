@@ -1,0 +1,11 @@
+.summonerPreview {
+  font-family: RobotoNormal;
+  display: flex;
+  align-items: center;
+  background-color: #fffffe;
+}
+
+.summonerPreview__data {
+  display: flex;
+  flex-direction: column;
+}

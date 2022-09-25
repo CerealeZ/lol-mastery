@@ -1,0 +1,19 @@
+.summonerDetails {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.summonerDetails--error {
+    font-family: RobotoNormal;
+  display: flex;
+  /* background-color: #feefe8; */
+  justify-content: center;
+}
+
+.summonerDetails--error__message {
+  /* background-color: #fffffe; */
+  background-color: #feefe8;
+  padding: 10px;
+  border-radius: 15px;
+}

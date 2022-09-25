@@ -1,0 +1,23 @@
+.tableContainer {
+  overflow: auto;
+}
+
+
+.table{
+  font-family: RobotoNormal;
+  width: 100%;
+
+}
+
+.thead{
+  background-color: #078080;
+  color:#fffffe;
+  
+}
+
+.tr:nth-child(odd) {
+  background-color: #fffffe;
+}
+.tr:nth-child(even) {
+  background-color: #f8f5f2;
+}

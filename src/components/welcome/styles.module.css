@@ -1,0 +1,29 @@
+.welcome {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  font-family: RobotoNormal;
+}
+
+.welcome__title {
+  text-align: center;
+}
+
+.welcome__desc {
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f5f2;
+  border-radius: 15px;
+}
+
+.welcome__desc--button {
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  background-color: #078080;
+  color: #fffffe;
+}
+
+.welcome__desc--button:active{
+    background-color: #086d6d;
+}
