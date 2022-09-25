@@ -6,7 +6,7 @@ export default function ChampionsMasteryTable({ championsData }) {
   const [sortedBy, setSortedBy] = useState("championPoints")
   const [isAscendant, setAscendant] = useState(false)
   const { data: championsInfo } = useFetch(
-    "http://ddragon.leagueoflegends.com/cdn/12.15.1/data/es_MX/champion.json",
+    "https://ddragon.leagueoflegends.com/cdn/12.15.1/data/es_MX/champion.json",
     undefined,
     (patchInfo) => Object.entries(patchInfo.data) //Riot Api gives us an object with champions data, so we need to convert it into an array
   )
