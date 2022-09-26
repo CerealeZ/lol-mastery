@@ -40,15 +40,22 @@ export default async function getSummonerMatchs(req, res) {
       const summonerScore = info.participants.find(
         (participant) => participant.puuid === puuid
       )
-      const { kills, deaths, assists, championId, win, championName } = summonerScore
 
+      const { kills, deaths, assists, championId, win, championName } =
+        summonerScore
+      const itemIds = Array.from(
+        { length: 7 },
+        (v, i) => summonerScore[`item${i}`]
+      )
       return {
+        queueId: info.queueId,
+        itemIds,
         championId,
         kills,
         deaths,
         assists,
         win,
-        championName
+        championName,
       }
     })
 
