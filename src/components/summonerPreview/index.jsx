@@ -5,13 +5,14 @@ export default function SummonerPreview({
   name,
   profileIconId,
   summonerLevel,
+  gameVersion
 }) {
   return (
     <div className={styles.summonerPreview}>
       <Image
         height={50}
         width={50}
-        src={`https://ddragon.leagueoflegends.com/cdn/12.16.1/img/profileicon/${profileIconId}.png`}
+        src={`https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/profileicon/${profileIconId}.png`}
         alt={`${name}'s profile icon`}
       ></Image>
       <div className={styles.summonerPreview__data}>

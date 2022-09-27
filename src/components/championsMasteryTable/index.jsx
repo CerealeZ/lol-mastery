@@ -2,11 +2,15 @@ import { useState, useCallback } from "react"
 import styles from "./styles.module.css"
 import useFetch from "src/hooks/useFetch"
 
-export default function ChampionsMasteryTable({ championsData }) {
+export default function ChampionsMasteryTable({
+  championsData,
+  language,
+  gameVersion,
+}) {
   const [sortedBy, setSortedBy] = useState("championPoints")
   const [isAscendant, setAscendant] = useState(false)
   const { data: championsInfo } = useFetch(
-    "https://ddragon.leagueoflegends.com/cdn/12.15.1/data/es_MX/champion.json",
+    `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/${language}/champion.json`,
     undefined,
     (patchInfo) => Object.entries(patchInfo.data) //Riot Api gives us an object with champions data, so we need to convert it into an array
   )

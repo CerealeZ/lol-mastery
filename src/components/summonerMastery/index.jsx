@@ -1,7 +1,11 @@
 import useFetch from "src/hooks/useFetch"
 import ChampionsMasteryTable from "../championsMasteryTable"
 
-export default function SummonerMastery({ summonerInfo: { region, id } }) {
+export default function SummonerMastery({
+  summonerInfo: { region, id },
+  language,
+  gameVersion,
+}) {
   const { data: summonerMastery } = useFetch(
     `/api/summoner-mastery?region=${region}&id=${id}`
   )
@@ -50,7 +54,11 @@ export default function SummonerMastery({ summonerInfo: { region, id } }) {
           </tr>
         </tbody>
       </table>
-      <ChampionsMasteryTable championsData={summonerMastery.championsMastery} />
+      <ChampionsMasteryTable
+        language={language}
+        gameVersion={gameVersion}
+        championsData={summonerMastery.championsMastery}
+      />
     </div>
   )
 }

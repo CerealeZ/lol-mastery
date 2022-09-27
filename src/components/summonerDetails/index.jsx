@@ -5,7 +5,11 @@ import SummonerPreview from "src/components/summonerPreview"
 import NavBar from "src/components/navBar"
 import { useState } from "react"
 
-export default function SummonerDetails({ searchQuery: { name, region } }) {
+export default function SummonerDetails({
+  searchQuery: { name, region },
+  gameVersion,
+  language,
+}) {
   const { data: summonerInfo } = useFetch(
     `/api/summoner-info?name=${name}&region=${region}`
   )
@@ -30,18 +34,24 @@ export default function SummonerDetails({ searchQuery: { name, region } }) {
   return (
     <div>
       <div style={{ position: "sticky", top: 0, left: 0 }}>
-        <div>{<SummonerPreview {...summonerInfo} />}</div>
-        <div>
-          {
-            <NavBar
-              buttons={summonerNavButtons}
-              actualComponent={Component}
-              setComponent={setComponent}
-            />
-          }
-        </div>
+        <SummonerPreview
+          {...summonerInfo}
+          gameVersion={gameVersion}
+          language={language}
+        />
+        <NavBar
+          buttons={summonerNavButtons}
+          actualComponent={Component}
+          setComponent={setComponent}
+        />
       </div>
-      <div>{Component && <Component summonerInfo={summonerInfo} />}</div>
+      {Component && (
+        <Component
+          summonerInfo={summonerInfo}
+          gameVersion={gameVersion}
+          language={language}
+        />
+      )}
     </div>
   )
 }

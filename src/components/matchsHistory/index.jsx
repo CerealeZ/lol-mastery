@@ -12,7 +12,7 @@ const queueTranslate = {
   1400: "Ultimate Spell Book",
 }
 
-export default function MatchHistory({ summonerInfo }) {
+export default function MatchHistory({ summonerInfo, gameVersion }) {
   const { data } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
@@ -40,7 +40,7 @@ export default function MatchHistory({ summonerInfo }) {
                   <Image
                     width={100}
                     height={100}
-                    src={`https://ddragon.leagueoflegends.com/cdn/12.18.1/img/champion/${championName}.png`}
+                    src={`https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/champion/${championName}.png`}
                     alt={championName}
                   ></Image>
                 </div>
@@ -66,8 +66,8 @@ export default function MatchHistory({ summonerInfo }) {
                       key={index}
                       src={
                         id
-                          ? `https://ddragon.leagueoflegends.com/cdn/12.18.1/img/item/${id}.png`
-                          : "https://ddragon.leagueoflegends.com/cdn/12.18.1/img/spell/Summoner_UltBookPlaceholder.png"
+                          ? `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/item/${id}.png`
+                          : `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/spell/Summoner_UltBookPlaceholder.png`
                       }
                       alt={""}
                       height={35}
