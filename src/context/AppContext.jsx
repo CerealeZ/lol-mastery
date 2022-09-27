@@ -16,14 +16,20 @@ export function AppProvider({ children }) {
     setLanguage(prefUserLanguage)
   }, [])
 
+  const setNewLanguage = (language) => {
+    localStorage.setItem("lang", language)
+    setLanguage(language)
+  }
+
   return (
     <AppContext.Provider
       value={{
         gameVersion,
         language,
+        setNewLanguage,
       }}
     >
-      {children}
+      {(language || gameVersion) && children}
     </AppContext.Provider>
   )
 }
