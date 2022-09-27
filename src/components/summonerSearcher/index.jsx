@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useRouter } from "next/router"
 import axios from "axios"
 import styles from "./styles.module.css"
+import AppContext from "src/context/AppContext"
 
 const handleInput =
   (setter) =>
@@ -20,6 +21,7 @@ export default function SummonerSearcher() {
     region: "la1", // TODO: Change it dinamyc
   })
   const [hasError, setError] = useState(false)
+  const { setNewLanguage, language } = useContext(AppContext)
   const searchUser = async ({ name, region }) => {
     // TODO: do a form checker
     if (!name.trim()) {
@@ -65,6 +67,17 @@ export default function SummonerSearcher() {
         <option value={"jp1"}>JP</option>
         <option value={"kr"}>KR</option>
       </select>
+
+      <select
+        className={`${styles.searchBox__input} ${styles["searchBox__input--select"]}`}
+        name="lang"
+        onChange={(e) => setNewLanguage(e.target.value)}
+        defaultValue={language}
+      >
+        <option value={"en_US"}>EN</option>
+        <option value={"es_MX"}>ES</option>
+      </select>
+
       <button
         className={`${styles.searchBox__input} ${styles["searchBox__input--button"]}`}
         type="submit"
