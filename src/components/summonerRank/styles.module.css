@@ -3,49 +3,18 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 30px;
-}
-
-.summonerRank__table {
-  /* font-family: Arial, Helvetica, sans-serif; */
-  width: 100%;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: #f8f5f2;
-  table-layout: fixed;
-}
-
-.summonerRank__table__th {
-  /* border: 1px solid black; */
-  color: #fffffe;
-  background-color: #078080;
-  /* padding: 10px;
-  border-radius: 15px 15px 0 0 ;
-  background-color: #078080;
-  color: #fffffe; */
-
-}
-
-.summonerRank__table__td {
-  /* border: 1px solid black ;
-  border-right-color: black ; */
-  /* padding: 10px;
-  border-radius: 0 0 15px 15px;
-  color: #222525;
-  background-color: #fffffe; */
-  text-align: center;
-  background-color: #fffffe;
-}
-
-.infoTable__caption {
-  background-color: #f8f5f2;
-  padding: 5px;
-  border-radius: 10px 10px 0 0;
-}
-
-.tableHeader {
   padding: 10px;
+}
+
+.summonerRank__queue {
+  background-color: #f8f5f2;
   border-radius: 15px;
-  background-color: #078080;
-  color: #fffffe;
+  padding: 15px;
+}
+
+.summonerRank__queue__info {
+  padding: 10px;
+  background-color: #fffffe;
+  border-radius: 15px;
+  flex-grow: 1;
 }

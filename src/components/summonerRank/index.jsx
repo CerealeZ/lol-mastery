@@ -1,123 +1,71 @@
 import useFetch from "src/hooks/useFetch"
 import styles from "./styles.module.css"
+import scripts from "./languages"
+import Image from "next/image"
 
-const queueTranslate = {
-  ["RANKED_SOLO_5x5"]: "SoloQ 5x5",
-  ["RANKED_FLEX_SR"]: "Flex 5x5",
-}
-
-export default function SummonerProfile({ summonerInfo: { region, id } }) {
+export default function SummonerProfile({
+  summonerInfo: { region, id },
+  language,
+}) {
   const { data } = useFetch(`/api/summoner-rank?region=${region}&id=${id}`)
+  const script = scripts[language]
 
-  if (!data) return <div>Cargando...</div>
+  if (!data) return <div>Loading...</div>
 
   return (
     <div className={styles.summonerRank}>
-      <h1>Ranked Information</h1>
+      <h1>{script.title}</h1>
       {data.map(
-        ({
-          losses,
-          wins,
-          queueType,
-          rank,
-          tier,
-          leaguePoints,
-          miniSeries,
-          winrate,
-          miniSeriesProgress,
-        }, index) => {
+        (
+          {
+            losses,
+            wins,
+            queueType,
+            rank,
+            tier,
+            leaguePoints,
+            winrate,
+            miniSeriesProgress,
+          },
+          index
+        ) => {
           return (
-            <table key={index}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                overflow: "auto",
-                width: "100%",
-              }}
-              className={styles.summonerRank__table}
-            >
-              <caption
+            <div className={styles.summonerRank__queue} key={index}>
+              <h2>{script[queueType]}</h2>
+              <div
                 style={{
-                  display: "block",
-                  textAlign: "left",
-                  fontSize: "2rem",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {queueTranslate[queueType]}
-              </caption>
-              <tbody
-                style={{
-                  display: "table",
-                }}
-              >
-                <tr className={styles.summonerRank__table__tr}>
-                  <th
-                    className={styles.summonerRank__table__th}
-                    rowSpan={2}
-                    scope={"rowgroup"}
-                    id="ranking"
-                  >
-                    Ranking
-                  </th>
-                  <th className={styles.summonerRank__table__th} id="tier">
-                    Tier
-                  </th>
-
-                  {miniSeries ? (
-                    <th className={styles.summonerRank__table__th} id="series">
-                      Series
-                    </th>
-                  ) : (
-                    <th className={styles.summonerRank__table__th} id="lp">
-                      LP
-                    </th>
-                  )}
-                </tr>
-                <tr className={styles.summonerRank__table__tr}>
-                  <td
-                    className={styles.summonerRank__table__td}
-                    headers="tier"
-                  >{`${tier} ${rank}`}</td>
-                  {miniSeries ? (
-                    <td
-                      className={styles.summonerRank__table__td}
-                      headers="series"
-                    >
-                      {miniSeriesProgress}
-                    </td>
-                  ) : (
-                    <td className={styles.summonerRank__table__td} headers="lp">
-                      {leaguePoints}
-                    </td>
-                  )}
-                </tr>
-                <tr className={styles.summonerRank__table__tr}>
-                  <th
-                    rowSpan={2}
-                    className={styles.summonerRank__table__th}
-                    scope={"rowgroup"}
-                  >
-                    Matchs
-                  </th>
-                  <th className={styles.summonerRank__table__th} id="winrate">
-                    Winrate
-                  </th>
-                  <th className={styles.summonerRank__table__th} id="winloss">
-                    Win/Loss
-                  </th>
-                </tr>
-                <tr className={styles.summonerRank__table__tr}>
-                  <td
-                    className={styles.summonerRank__table__td}
-                    headers="winrate"
-                  >{`${winrate}%`}</td>
-                  <td
-                    className={styles.summonerRank__table__td}
-                    headers="winloss"
-                  >{`${wins}V / ${losses}L`}</td>
-                </tr>
-              </tbody>
-            </table>
+                <div>
+                  <Image
+                    src={`/ranked_embleds/Emblem_${tier}.png`}
+                    height={150}
+                    width={150}
+                  />
+                </div>
+                <div className={styles.summonerRank__queue__info}>
+                  <p>
+                    {script.tier.tiers[tier] || tier} {rank}
+                  </p>
+                  <p>
+                    {!miniSeriesProgress
+                      ? `${script.points} ${leaguePoints}`
+                      : miniSeriesProgress}
+                  </p>
+                  <p>
+                    {script.winrate} {winrate}
+                  </p>
+                  <p>
+                    {script.wins} {wins}
+                  </p>
+                  <p>
+                    {script.losses} {losses}
+                  </p>
+                </div>
+              </div>
+            </div>
           )
         }
       )}

@@ -16,7 +16,7 @@ export default async function summonerRank(req, res) {
     const ranks = response.map((rankInfo) => {
       const { wins, losses, miniSeries } = rankInfo
       const totalRankedMatchs = wins + losses
-      const winrate = Math.round((wins / totalRankedMatchs) * 100)
+      const winrate = `${Math.round((wins / totalRankedMatchs) * 100)}%`
       const miniSeriesProgress =
         miniSeries &&
         miniSeries.progress
