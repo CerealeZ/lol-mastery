@@ -3,7 +3,7 @@
   display: flex;
   padding: 15px;
   gap: 10px;
-  background-color: #f8f5f2;
+  background-color: var(--cardBack);
 }
 
 .searchBox__input {
@@ -30,8 +30,8 @@
 }
 
 .searchBox__input--button {
-  background-color: #078080;
-  color: #fffffe;
+  background-color: var(--btnBack);
+  color: var(--btnText)
 }
 
 .searchBox__input--error {

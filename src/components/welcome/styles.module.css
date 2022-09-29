@@ -3,6 +3,8 @@
   flex-direction: column;
   padding: 10px;
   font-family: RobotoNormal;
+  background-color: var(--back);
+  color: var(--text);
 }
 
 .welcome__title {
@@ -12,7 +14,8 @@
 .welcome__desc {
   text-align: center;
   padding: 10px;
-  background-color: #f8f5f2;
+  background-color: var(--cardBack);
+  color: var(--cardText);
   border-radius: 15px;
 }
 
@@ -20,10 +23,10 @@
   padding: 10px;
   border-radius: 15px;
   border: none;
-  background-color: #078080;
-  color: #fffffe;
+  background-color: var(--btnBack);
+  color: var(--btnText);
 }
 
-.welcome__desc--button:active{
-    background-color: #086d6d;
+.welcome__desc--button:active {
+  background-color: #086d6d;
 }
