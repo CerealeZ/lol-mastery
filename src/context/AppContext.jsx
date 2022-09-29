@@ -10,18 +10,31 @@ export function AppProvider({ children }) {
     undefined,
     (versions) => versions[0]
   )
-    const [themeType, setThemeType] = useState(1)
-
+  const [theme, setTheme] = useState(0)
   const [language, setLanguage] = useState("")
 
-  useEffect(function getUserLanguage() {
-    const prefUserLanguage = localStorage.getItem("lang") || "en_US"
-    setLanguage(prefUserLanguage)
+  useEffect(() => {
+    const getUserLanguage = () => {
+      const prefUserLanguage = localStorage.getItem("lang") || "en_US"
+      setLanguage(prefUserLanguage)
+    }
+    const getUserTheme = () => {
+      const prefUserTheme = localStorage.getItem("theme") || 1
+      setTheme(prefUserTheme)
+    }
+
+    getUserLanguage()
+    getUserTheme()
   }, [])
 
   const setNewLanguage = (language) => {
     localStorage.setItem("lang", language)
     setLanguage(language)
+  }
+
+  const setNewTheme = (theme) => {
+    localStorage.setItem("theme", theme)
+    setTheme(theme)
   }
 
   return (
@@ -30,9 +43,11 @@ export function AppProvider({ children }) {
         gameVersion,
         language,
         setNewLanguage,
+        setNewTheme,
+        theme,
       }}
     >
-      <div className={themes[`theme${themeType}`]}>
+      <div className={themes[`theme${theme}`]}>
         {(language || gameVersion) && children}
       </div>
     </AppContext.Provider>
