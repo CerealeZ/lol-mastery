@@ -45,3 +45,16 @@
   --btnText: #33272a;
   --btnBack: #ff8ba7;
 }
+
+.theme5 {
+  /* https://www.happyhues.co/palettes/4 */
+
+  --back: #242629;
+  --text: #fffffe;
+
+  --cardBack: #16161a;
+  --cardText: #94a1b2;
+
+  --btnText: #fffffe;
+  --btnBack: #7f5af0;
+}
