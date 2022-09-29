@@ -1,0 +1,47 @@
+.theme1 {
+  /* https://www.happyhues.co/palettes/8 */
+  --back: #fffffe;
+  --text: #222525;
+
+  --cardBack: #f8f5f2;
+  --cardText: #222525;
+
+  --btnText: #fffffe;
+  --btnBack: #078080;
+}
+
+.theme2 {
+  /* https://www.happyhues.co/palettes/17 */
+  --back: #fffffe;
+  --text: #172c66;
+
+  --cardBack: #f3d2c1;
+  --cardText: #172c66;
+
+  --btnText: #001858;
+  --btnBack: #f582ae;
+}
+
+.theme3 {
+  /* https://www.happyhues.co/palettes/16 */
+  --back: #271c19;
+  --text: #fffffe;
+
+  --cardBack: #55423d;
+  --cardText: #fff3ec;
+
+  --btnText: #fffffe;
+  --btnBack: #9656a1;
+}
+
+.theme4 {
+  /* https://www.happyhues.co/palettes/15 */
+  --back: #fffffe;
+  --text: #594a4e;
+
+  --cardBack: #faeee7;
+  --cardText: #594a4e;
+
+  --btnText: #33272a;
+  --btnBack: #ff8ba7;
+}
