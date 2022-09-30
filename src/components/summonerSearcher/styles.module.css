@@ -1,7 +1,6 @@
 .searchBox {
   font-family: RobotoNormal;
   display: flex;
-  padding: 15px;
   gap: 10px;
   background-color: var(--cardBack);
 }
