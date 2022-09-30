@@ -3,7 +3,7 @@ import "../styles/globals.css"
 import "styles/fontawesome/css/all.css"
 import SummonerSearcher from "src/components/summonerSearcher"
 import ConfigMenu from "src/components/configMenu"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 
 import AppContext, { AppProvider } from "src/context/AppContext"
 
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
 function Layout({ children }) {
   // TODO: Find a better place for it
   const { language } = useContext(AppContext)
-  
+  const [isSettingsOpen, setSettingsOpen] = useState(false)
 
   return (
     <div
@@ -33,6 +33,9 @@ function Layout({ children }) {
       <div
         style={{
           display: "flex",
+          gap: "15px",
+          padding: "15px",
+          backgroundColor: "var(--cardBack)",
         }}
       >
         <div
@@ -60,6 +63,7 @@ function Layout({ children }) {
               // backgroundColor: "#fffffe",
             }}
             type="button"
+            onClick={() => setSettingsOpen((prev) => !prev)}
           >
             <i className="fa-solid fa-screwdriver-wrench" />
           </button>
@@ -68,12 +72,11 @@ function Layout({ children }) {
       <div
         style={{
           flexGrow: 1,
+          backgroundColor: "var(--back)",
         }}
       >
         {children}
-        <div>
-          <ConfigMenu language={language} />
-        </div>
+        <div>{isSettingsOpen && <ConfigMenu language={language} />}</div>
       </div>
     </div>
   )
