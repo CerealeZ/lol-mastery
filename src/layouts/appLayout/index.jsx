@@ -2,6 +2,7 @@ import SummonerSearcher from "src/components/summonerSearcher"
 import ConfigMenu from "src/components/configMenu"
 import { useContext, useState } from "react"
 import AppContext from "src/context/AppContext"
+import ModalBox from "src/templates/modal"
 
 export default function Layout({ children }) {
   const { language, theme, setNewLanguage, setNewTheme } =
@@ -64,12 +65,16 @@ export default function Layout({ children }) {
         {children}
         <div>
           {isSettingsOpen && (
-            <ConfigMenu
-              language={language}
-              setNewLanguage={setNewLanguage}
-              theme={theme}
-              setNewTheme={setNewTheme}
-            />
+            <ModalBox style={{
+              backgroundColor:"var(--back)"
+            }} onRemoveClick={()=>setSettingsOpen(false)}>
+              <ConfigMenu
+                language={language}
+                setNewLanguage={setNewLanguage}
+                theme={theme}
+                setNewTheme={setNewTheme}
+              />
+            </ModalBox>
           )}
         </div>
       </div>
