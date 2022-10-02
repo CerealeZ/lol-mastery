@@ -1,4 +1,5 @@
 import scripts from "./languages"
+import styles from "./styles.module.css"
 
 export default function ConfigMenu({
   setNewLanguage,
@@ -9,11 +10,12 @@ export default function ConfigMenu({
   const script = scripts[language]
 
   return (
-    <div>
+    <form className={styles.form}>
       <h2>{script.title}</h2>
-      <form>
+      <div className={styles.form__box}>
         <label>{script.languages}</label>
         <select
+          className={styles.form__input}
           defaultValue={language}
           onChange={(e) => setNewLanguage(e.target.value)}
         >
@@ -22,6 +24,7 @@ export default function ConfigMenu({
         </select>
         <label>{script.themes}</label>
         <select
+          className={styles.form__input}
           defaultValue={theme}
           onChange={(e) => setNewTheme(e.target.value)}
         >
@@ -31,7 +34,7 @@ export default function ConfigMenu({
           <option value={4}>4</option>
           <option value={5}>5</option>
         </select>
-      </form>
-    </div>
+      </div>
+    </form>
   )
 }

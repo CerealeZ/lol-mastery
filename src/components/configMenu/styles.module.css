@@ -1,0 +1,27 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--back);
+  color: var(--text);
+  font-family: RobotoNormal;
+}
+
+.form__box {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cardBack);
+  color: var(--cardText);
+  border-radius: 30px;
+  padding: 20px;
+  gap: 20px;
+}
+
+.form__input {
+  align-self: start;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  border-width: 1px;
+  border-color:transparent;
+}
