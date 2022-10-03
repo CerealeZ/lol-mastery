@@ -15,7 +15,10 @@ export default function NavBar({ setComponent, buttons, actualComponent }) {
             onClick={() => setComponent(() => Component)}
             className={styles.navBar__button}
             style={{
-              ...(Component === actualComponent && { backgroundColor: "#078080", color:"white" }),
+              ...(Component === actualComponent && {
+                backgroundColor: "var(--btnBack)",
+                color: "var(--btnText)",
+              }),
             }}
           >
             <i className={icon || "fa-solid fa-question"}></i>

@@ -4,17 +4,21 @@
   flex-direction: column;
   gap: 30px;
   padding: 10px;
+  color: var(--text);
+  background-color: var(--back) ;
 }
 
 .summonerRank__queue {
-  background-color: #f8f5f2;
+  background-color: var(--cardBack);
+  color: var(--cardText);
   border-radius: 15px;
   padding: 15px;
 }
 
 .summonerRank__queue__info {
   padding: 10px;
-  background-color: #fffffe;
+  background-color: var(--back);
+  color: var(--text);
   border-radius: 15px;
   flex-grow: 1;
 }

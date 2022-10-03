@@ -20,15 +20,9 @@ export default function MatchHistory({ summonerInfo, gameVersion }) {
   console.log(data)
   if (!data) return <div>Loading</div>
   return (
-    <div>
-      <h1
-        style={{
-          fontFamily: "RobotoNormal",
-        }}
-      >
-        Match History
-      </h1>
-      <div>
+    <div className={styles.history}>
+      <h1>Match History</h1>
+      <div className={styles.matchList}>
         {data.map(
           (
             { championName, kills, deaths, assists, win, itemIds, queueId },
@@ -36,7 +30,7 @@ export default function MatchHistory({ summonerInfo, gameVersion }) {
           ) => {
             return (
               <div className={styles.match} key={index}>
-                <div className={styles.match__box}>
+                <div>
                   <Image
                     width={100}
                     height={100}

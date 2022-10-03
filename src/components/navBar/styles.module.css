@@ -3,7 +3,8 @@
   width: 100vw;
   overflow: auto;
   height: 50px;
-  background-color: #f8f5f2;
+  background-color: var(--cardBack);
+  color: var(--cardText);
   /* border-top: 1px solid #fffffe; */
   /* justify-content: center; */
 }
@@ -14,5 +15,5 @@
   align-items: center;
   flex: none;
   width: 22%;
-  border-right: 1px solid #fffffe;
+  /* border-right: 1px solid #fffffe; */
 }

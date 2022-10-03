@@ -2,7 +2,8 @@
   font-family: RobotoNormal;
   display: flex;
   align-items: center;
-  background-color: #fffffe;
+  background-color: var(--back);
+  color:var(--text)
 }
 
 .summonerPreview__data {

@@ -1,17 +1,34 @@
+.history {
+  font-family: RobotoNormal;
+  background-color: var(--back);
+  color: var(--text);
+}
+
+.matchList {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
 .match {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  font-family: RobotoNormal;
+  gap: 10px;
+  background-color: var(--cardBack);
+  padding: 10px;
 }
 
 .match__box {
+  background-color: var(--back);
+  padding: 10px ;
+  border-radius: 15px;
   /* flex-grow: 1; */
 }
 
 .match__box__text {
+  
+  color: var(--text);
   text-align: center;
   padding: 0;
   margin: 0;
