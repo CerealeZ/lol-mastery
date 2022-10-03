@@ -30,7 +30,7 @@ export default function Layout({ children }) {
             flexGrow: 1,
           }}
         >
-          <SummonerSearcher />
+          <SummonerSearcher language={language} />
         </div>
         <div
           style={{
@@ -65,9 +65,12 @@ export default function Layout({ children }) {
         {children}
         <div>
           {isSettingsOpen && (
-            <ModalBox style={{
-              backgroundColor:"var(--back)"
-            }} onRemoveClick={()=>setSettingsOpen(false)}>
+            <ModalBox
+              style={{
+                backgroundColor: "var(--back)",
+              }}
+              onRemoveClick={() => setSettingsOpen(false)}
+            >
               <ConfigMenu
                 language={language}
                 setNewLanguage={setNewLanguage}

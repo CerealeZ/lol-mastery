@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
 import styles from "./styles.module.css"
+import scripts from "./languajes"
 
 const handleInput =
   (setter) =>
@@ -12,14 +13,14 @@ const preventDefault = (fn) => (e) => {
   e.preventDefault()
   return fn(e)
 }
-export default function SummonerSearcher() {
+export default function SummonerSearcher({ language }) {
   const router = useRouter()
   const [query, setQuery] = useState({
     name: "",
     region: "la1", // TODO: Change it dinamyc
   })
   const [hasError, setError] = useState(false)
-
+  const script = scripts[language]
   const searchUser = async ({ name, region }) => {
     // TODO: do a form checker
     if (!name.trim()) {
@@ -39,7 +40,7 @@ export default function SummonerSearcher() {
         type={"text"}
         value={query.name}
         name="name"
-        placeholder="Summoner's name"
+        placeholder={script.placeholder}
         className={`${styles.searchBox__input} ${
           styles["searchBox__input--name"]
         } ${hasError ? styles["searchBox__input--error"] : ""}`}
