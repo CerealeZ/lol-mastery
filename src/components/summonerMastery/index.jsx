@@ -1,5 +1,6 @@
 import useFetch from "src/hooks/useFetch"
 import ChampionsMasteryTable from "../championsMasteryTable"
+import styles from "./styles.module.css"
 
 export default function SummonerMastery({
   summonerInfo: { region, id },
@@ -17,43 +18,17 @@ export default function SummonerMastery({
   const { masteryCounts, totalSummonerMastery, chestsEarned } = summonerMastery
 
   return (
-    <div>
-      <table>
-        <caption>{"General Summary"}</caption>
-        <tbody>
-          <tr>
-            <th rowSpan={2}>{"Mastery Levels"}</th>
-            <th>7</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>Total</th>
-          </tr>
-          <tr>
-            <td>{masteryCounts[7]}</td>
-            <td>{masteryCounts[6]}</td>
-            <td>{masteryCounts[5]}</td>
-            <td>{masteryCounts[4]}</td>
-            <td>{masteryCounts[3]}</td>
-            <td>{masteryCounts[2]}</td>
-            <td>{masteryCounts[1]}</td>
-            <td>{totalSummonerMastery}</td>
-          </tr>
-          <tr>
-            <th rowSpan={2}>Chest reclamed</th>
-            <th colSpan={4}>Earned</th>
-            <th colSpan={4}>Total</th>
-          </tr>
-
-          <tr>
-            <td colSpan={4}>{chestsEarned.got}</td>
-            <td colSpan={4}>{chestsEarned.total}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div style={{
+      paddingTop:"15px"
+    }}>
+      <div className={styles.masteryGeneral}>
+        <h2>General info</h2>
+        <p>Campeones jugados: {summonerMastery.championsMastery.length}</p>
+        <p>Puntos total de maestria: {totalSummonerMastery}</p>
+        <p>
+          Cofres conseguidos : {chestsEarned.got} / {chestsEarned.total}
+        </p>
+      </div>
       <ChampionsMasteryTable
         language={language}
         gameVersion={gameVersion}
