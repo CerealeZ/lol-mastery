@@ -3,7 +3,7 @@ import styles from "./styles.module.css"
 import scripts from "./languages"
 import Image from "next/image"
 
-export default function SummonerProfile({
+export default function SummonerRank({
   summonerInfo: { region, id },
   language,
 }) {
