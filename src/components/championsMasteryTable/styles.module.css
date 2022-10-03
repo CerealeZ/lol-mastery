@@ -1,23 +1,23 @@
 .tableContainer {
   overflow: auto;
+  color:var(--text)
 }
 
-
-.table{
+.table {
   font-family: RobotoNormal;
   width: 100%;
-
 }
 
-.thead{
-  background-color: #078080;
-  color:#fffffe;
-  
+.thead {
+  background-color: var(--btnBack);
+  color: var(--btnText);
 }
 
 .tr:nth-child(odd) {
-  background-color: #fffffe;
+  background-color: var(--back);
+  color: var(--text);
 }
 .tr:nth-child(even) {
-  background-color: #f8f5f2;
+  background-color: var(--cardBack);
+  color: var(--cardText);
 }
