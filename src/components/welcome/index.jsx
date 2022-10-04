@@ -1,15 +1,12 @@
 import styles from "./styles.module.css"
 import { useRouter } from "next/router"
-import { useContext } from "react"
-import AppContext from "src/context/AppContext"
 import scripts from "./languages"
 
 const MY_SUMMONER_QUERY = "la1/Rolling+Typhoon"
 
-export default function Welcome() {
+export default function Welcome({ language }) {
   const router = useRouter()
-  const { language } = useContext(AppContext)
-  const script = scripts[language] 
+  const script = scripts[language]
 
   if (!script) return <></>
   return (
