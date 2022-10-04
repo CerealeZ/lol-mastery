@@ -12,7 +12,6 @@ export default function SummonerMastery({
     `/api/summoner-mastery?region=${region}&id=${id}`
   )
   const script = scripts[language]
-  console.log(summonerMastery)
 
   if (!summonerMastery) return <div>Cargando...</div>
 

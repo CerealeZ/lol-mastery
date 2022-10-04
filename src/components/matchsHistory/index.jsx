@@ -20,7 +20,6 @@ export default function MatchHistory({ summonerInfo, gameVersion, language }) {
 
   const script = scripts[language]
 
-  console.log(data)
   if (!data) return <div>Loading</div>
   return (
     <div className={styles.history}>
