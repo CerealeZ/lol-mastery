@@ -1,6 +1,7 @@
 import Image from "next/image"
 import useFetch from "src/hooks/useFetch"
 import styles from "./styles.module.css"
+import scripts from "./languages"
 
 const queueTranslate = {
   400: "Normal Recruit",
@@ -12,16 +13,18 @@ const queueTranslate = {
   1400: "Ultimate Spell Book",
 }
 
-export default function MatchHistory({ summonerInfo, gameVersion }) {
+export default function MatchHistory({ summonerInfo, gameVersion, language }) {
   const { data } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
+
+  const script = scripts[language]
 
   console.log(data)
   if (!data) return <div>Loading</div>
   return (
     <div className={styles.history}>
-      <h1>Match History</h1>
+      <h1>{script.title}</h1>
       <div className={styles.matchList}>
         {data.map(
           (
@@ -45,10 +48,10 @@ export default function MatchHistory({ summonerInfo, gameVersion }) {
                   className={styles.match__box}
                 >
                   <p className={styles.match__box__text}>
-                    {win ? "Victory" : "Defeated"}
+                    {win ? script.result.win : script.result.loss}
                   </p>
                   <p className={styles.match__box__text}>
-                    {queueTranslate[queueId]}
+                    {script.queues[queueId]}
                   </p>
                   <p
                     className={styles.match__box__text}

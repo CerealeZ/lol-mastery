@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react"
 import styles from "./styles.module.css"
 import useFetch from "src/hooks/useFetch"
+import scripts from "./languages"
 
 export default function ChampionsMasteryTable({
   championsData,
@@ -14,6 +15,7 @@ export default function ChampionsMasteryTable({
     undefined,
     (patchInfo) => Object.entries(patchInfo.data) //Riot Api gives us an object with champions data, so we need to convert it into an array
   )
+  const script = scripts[language]
   const getChampionDataById = useCallback(
     (championId) => {
       if (!championsInfo) return
@@ -37,14 +39,14 @@ export default function ChampionsMasteryTable({
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
-        <caption>Champions resumen</caption>
+        <caption>{script.caption}</caption>
         <thead className={styles.thead}>
           <tr>
-            <th onClick={sortHandle("name")}>{"Name"}</th>
-            <th onClick={sortHandle("championLevel")}>{"Mastery Level"}</th>
-            <th onClick={sortHandle("championPoints")}>{"Mastery Points"}</th>
-            <th onClick={sortHandle("lastPlayTime")}>{"Last Play"}</th>
-            <th onClick={sortHandle("chestGranted")}>{"Chest Granted"}</th>
+            <th onClick={sortHandle("name")}>{script.name}</th>
+            <th onClick={sortHandle("championLevel")}>{script.level}</th>
+            <th onClick={sortHandle("championPoints")}>{script.points}</th>
+            <th onClick={sortHandle("lastPlayTime")}>{script.lastPlay}</th>
+            <th onClick={sortHandle("chestGranted")}>{script.chest}</th>
           </tr>
         </thead>
         <tbody>
