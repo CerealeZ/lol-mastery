@@ -8,13 +8,14 @@ export default function SummonerMastery({
   language,
   gameVersion,
 }) {
-  const { data: summonerMastery } = useFetch(
+  const { response , isLoading } = useFetch(
     `/api/summoner-mastery?region=${region}&id=${id}`
   )
   const script = scripts[language]
 
-  if (!summonerMastery) return <div>Cargando...</div>
+  if (isLoading) return <div>Cargando...</div>
 
+  const {data: summonerMastery} = response
   const { masteryCounts, totalSummonerMastery, chestsEarned } = summonerMastery
 
   return (

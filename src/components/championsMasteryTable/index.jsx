@@ -10,7 +10,7 @@ export default function ChampionsMasteryTable({
 }) {
   const [sortedBy, setSortedBy] = useState("championPoints")
   const [isAscendant, setAscendant] = useState(false)
-  const { data: championsInfo } = useFetch(
+  const { response: championsInfo, isLoading } = useFetch(
     `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/${language}/champion.json`,
     undefined,
     (patchInfo) => Object.entries(patchInfo.data) //Riot Api gives us an object with champions data, so we need to convert it into an array
@@ -18,8 +18,8 @@ export default function ChampionsMasteryTable({
   const script = scripts[language]
   const getChampionDataById = useCallback(
     (championId) => {
-      if (!championsInfo) return
-      const [foundChampion] = championsInfo.filter(
+      if (!championsInfo?.isOkay) return
+      const [foundChampion] = championsInfo.data.filter(
         ([, championData]) => championData.key == championId
       )
       return foundChampion[1]
@@ -34,7 +34,7 @@ export default function ChampionsMasteryTable({
     setSortedBy(sortProperty)
     setAscendant(false)
   }
-  if (!championsInfo) return <div></div>
+  if (isLoading) return <div>loading...</div>
 
   return (
     <div className={styles.tableContainer}>

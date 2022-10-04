@@ -5,7 +5,7 @@ import themes from "./themes.module.css"
 const AppContext = createContext()
 
 export function AppProvider({ children }) {
-  const { data: gameVersion } = useFetch(
+  const { response: gameVersion } = useFetch(
     "https://ddragon.leagueoflegends.com/api/versions.json",
     undefined,
     (versions) => versions[0]
@@ -40,7 +40,7 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
-        gameVersion,
+        gameVersion:gameVersion?.data,
         language,
         setNewLanguage,
         setNewTheme,

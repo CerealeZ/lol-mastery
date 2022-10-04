@@ -10,7 +10,7 @@ import NavBar from "src/components/navBar"
 export default function SummonerProfile() {
   const { summoner_name, region } = useRouter().query
   const { language, gameVersion } = useContext(AppContext)
-  const { data: summonerInfo } = useFetch(
+  const { response: summonerInfo, isLoading } = useFetch(
     summoner_name && region
       ? `/api/summoner-info?name=${summoner_name}&region=${region}`
       : ""
@@ -21,21 +21,23 @@ export default function SummonerProfile() {
     region,
     language,
     gameVersion,
-    summonerInfo,
+    !isLoading,
   ]
   const isAllLoaded = requeriedsToRender.every((state) => state)
 
   if (!isAllLoaded) {
     return (
-      <div
-      // className={styles.summonerDetails}
-      >
+      <div>
         <Head>
           <title>{"Buscando..."}</title>
         </Head>
         <i className="fa-solid fa-hourglass"></i>
       </div>
     )
+  }
+
+  if (!summonerInfo.isOkay) {
+    return <div>Player not found</div>
   }
 
   return (
@@ -45,7 +47,7 @@ export default function SummonerProfile() {
       </Head>
       <div style={{ position: "sticky", top: 0, left: 0 }}>
         <SummonerPreview
-          {...summonerInfo}
+          {...summonerInfo.data}
           gameVersion={gameVersion}
           language={language}
         />
@@ -57,7 +59,7 @@ export default function SummonerProfile() {
       </div>
       {Component && (
         <Component
-          summonerInfo={summonerInfo}
+          summonerInfo={summonerInfo.data}
           gameVersion={gameVersion}
           language={language}
         />

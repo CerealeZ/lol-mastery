@@ -14,18 +14,18 @@ const queueTranslate = {
 }
 
 export default function MatchHistory({ summonerInfo, gameVersion, language }) {
-  const { data } = useFetch(
+  const { response, isLoading } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
 
   const script = scripts[language]
 
-  if (!data) return <div>Loading</div>
+  if (isLoading) return <div>Loading</div>
   return (
     <div className={styles.history}>
       <h1>{script.title}</h1>
       <div className={styles.matchList}>
-        {data.map(
+        {response.data.map(
           (
             { championName, kills, deaths, assists, win, itemIds, queueId },
             index

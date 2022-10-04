@@ -2,19 +2,27 @@ import { useState, useEffect, useCallback } from "react"
 import axios from "axios"
 
 const useFetch = (url, initialData = undefined, callback) => {
-  const [data, setData] = useState(initialData)
-  const [isLoading, setLoading] = useState(false)
+  const [response, setResponse] = useState(initialData)
+  const [isLoading, setLoading] = useState(true)
   const fetch = useCallback(async () => {
-    setData(initialData)
+    setResponse(initialData)
     if (!url) return
     try {
       setLoading(true)
-      const { data } = await axios.get(url)
-      setData(callback ? callback(data) : data)
+      const response = await axios.get(url)
+      const { data, status } = response
+      const finalResponse = {
+        data: callback ? callback(data) : data,
+        status,
+        isOkay: true,
+      }
+      setResponse(finalResponse)
     } catch (err) {
-      setData({
-        status: "error",
-        msg: err,
+      const { response } = err
+      setResponse({
+        status: response.status,
+        data: response.data,
+        isOkay: false,
       })
     } finally {
       setLoading(false)
@@ -26,9 +34,9 @@ const useFetch = (url, initialData = undefined, callback) => {
   }, [url, fetch])
 
   return {
-    data,
+    response,
     isLoading,
-    fetch,
+    reload: fetch,
   }
 }
 

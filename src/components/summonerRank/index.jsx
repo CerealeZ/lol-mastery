@@ -7,15 +7,15 @@ export default function SummonerRank({
   summonerInfo: { region, id },
   language,
 }) {
-  const { data } = useFetch(`/api/summoner-rank?region=${region}&id=${id}`)
+  const { response } = useFetch(`/api/summoner-rank?region=${region}&id=${id}`)
   const script = scripts[language]
 
-  if (!data) return <div>Loading...</div>
+  if (!response) return <div>Loading...</div>
 
   return (
     <div className={styles.summonerRank}>
       <h1>{script.title}</h1>
-      {data.map(
+      {response.data.map(
         (
           {
             losses,
