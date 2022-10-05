@@ -34,6 +34,6 @@ export default async function summonerRank(req, res) {
     res.status(200).json(ranks)
   } catch (error) {
     const { response } = error
-    res.status(response.status).json(error)
+    res.status(response?.status || 500).json(error)
   }
 }

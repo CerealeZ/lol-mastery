@@ -15,6 +15,6 @@ export default async function getSummonerInfo(req, res) {
     })
   } catch (error) {
     const { response } = error
-    res.status(response.status).json(error)
+    res.status(response?.status || 500).json(error)
   }
 }
