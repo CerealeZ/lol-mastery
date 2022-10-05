@@ -3,9 +3,22 @@ import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import AppContext from "src/context/AppContext"
 import useFetch from "src/hooks/useFetch"
-import { summonerNavButtons } from "src/components/summonerDetails/buttonsList"
 import SummonerPreview from "src/components/summonerPreview"
 import NavBar from "src/components/navBar"
+
+import SummonerRank from "src/components/summonerRank"
+import SummonerMastery from "src/components/summonerMastery"
+import MatchHistory from "src/components/matchsHistory"
+
+const renderComponent = (type, props) => {
+  const componentCase = {
+    rank: SummonerRank,
+    history: MatchHistory,
+    mastery: SummonerMastery,
+  }
+  const FinalComponent = componentCase[type]
+  return <FinalComponent {...props} />
+}
 
 export default function SummonerProfile() {
   const { summoner_name, region } = useRouter().query
@@ -15,7 +28,7 @@ export default function SummonerProfile() {
       ? `/api/summoner-info?name=${summoner_name}&region=${region}`
       : ""
   )
-  const [Component, setComponent] = useState()
+  const [component, setComponent] = useState("rank")
   const requeriedsToRender = [
     summoner_name,
     region,
@@ -24,12 +37,11 @@ export default function SummonerProfile() {
     !isLoading,
   ]
   const isAllLoaded = requeriedsToRender.every((state) => state)
-
   if (!isAllLoaded) {
     return (
       <div>
         <Head>
-          <title>{"Buscando..."}</title>
+          <title>{`Searching ${summoner_name}`}</title>
         </Head>
         <i className="fa-solid fa-hourglass"></i>
       </div>
@@ -37,13 +49,22 @@ export default function SummonerProfile() {
   }
 
   if (!summonerInfo.isOkay) {
-    return <div>Player not found</div>
+    return (
+      <>
+        <div>
+          <Head>
+            <title>{`Player not found :(`}</title>
+          </Head>
+          <p>Player not found</p>
+        </div>
+      </>
+    )
   }
 
   return (
     <div>
       <Head>
-        <title>{summoner_name} - League's Mastery</title>
+        <title>{`${summoner_name} - League's Mastery`}</title>
       </Head>
       <div style={{ position: "sticky", top: 0, left: 0 }}>
         <SummonerPreview
@@ -51,19 +72,13 @@ export default function SummonerProfile() {
           gameVersion={gameVersion}
           language={language}
         />
-        <NavBar
-          buttons={summonerNavButtons}
-          actualComponent={Component}
-          setComponent={setComponent}
-        />
+        <NavBar actualComponent={component} setComponent={setComponent} />
       </div>
-      {Component && (
-        <Component
-          summonerInfo={summonerInfo.data}
-          gameVersion={gameVersion}
-          language={language}
-        />
-      )}
+      {renderComponent(component, {
+        summonerInfo: summonerInfo.data,
+        language,
+        gameVersion,
+      })}
     </div>
   )
 }
