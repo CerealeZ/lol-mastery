@@ -10,6 +10,7 @@ import SummonerRank from "src/components/summonerRank"
 import SummonerMastery from "src/components/summonerMastery"
 import MatchHistory from "src/components/matchsHistory"
 import Loading from "src/components/loading"
+import Error from "src/components/error"
 
 const renderComponent = (type, props) => {
   const componentCase = {
@@ -24,7 +25,11 @@ const renderComponent = (type, props) => {
 export default function SummonerProfile() {
   const { summoner_name, region } = useRouter().query
   const { language, gameVersion } = useContext(AppContext)
-  const { response: summonerInfo, isLoading } = useFetch(
+  const {
+    response: summonerInfo,
+    isLoading,
+    reload,
+  } = useFetch(
     summoner_name && region
       ? `/api/summoner-info?name=${summoner_name}&region=${region}`
       : ""
@@ -52,12 +57,14 @@ export default function SummonerProfile() {
   if (!summonerInfo.isOkay) {
     return (
       <>
-        <div>
-          <Head>
-            <title>{`Player not found :(`}</title>
-          </Head>
-          <p>Player not found</p>
-        </div>
+        <Head>
+          <title>{`Error`}</title>
+        </Head>
+        <Error
+          status={summonerInfo.status}
+          language={language}
+          reload={summonerInfo.status !== 404 && reload}
+        />
       </>
     )
   }
