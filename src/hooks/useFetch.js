@@ -20,7 +20,7 @@ const useFetch = (url, initialData = undefined, callback) => {
     } catch (err) {
       const { response } = err
       setResponse({
-        status: response.status,
+        status: response?.status || 500,
         data: response.data,
         isOkay: false,
       })
