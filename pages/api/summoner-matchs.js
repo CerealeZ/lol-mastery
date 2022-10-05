@@ -61,6 +61,7 @@ export default async function getSummonerMatchs(req, res) {
 
     res.status(200).json(matchPrettyInfo)
   } catch (error) {
-    res.status(500).json(error)
+    const { response } = error
+    res.status(response.status).json(error)
   }
 }

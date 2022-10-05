@@ -62,6 +62,7 @@ export default async function getSummonerMastery(req, res) {
       ...masteryStuff,
     })
   } catch (error) {
-    res.status(500).json(error)
+    const { response } = error
+    res.status(response.status).json(error)
   }
 }
