@@ -7,6 +7,7 @@ export default function ChampionsMasteryTable({
   championsData,
   language,
   gameVersion,
+  LoadingComponent
 }) {
   const [sortedBy, setSortedBy] = useState("championPoints")
   const [isAscendant, setAscendant] = useState(false)
@@ -34,7 +35,7 @@ export default function ChampionsMasteryTable({
     setSortedBy(sortProperty)
     setAscendant(false)
   }
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <LoadingComponent />
 
   return (
     <div className={styles.tableContainer}>

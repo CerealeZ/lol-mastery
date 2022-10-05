@@ -7,13 +7,14 @@ export default function SummonerMastery({
   summonerInfo: { region, id },
   language,
   gameVersion,
+  LoadingComponent
 }) {
   const { response , isLoading } = useFetch(
     `/api/summoner-mastery?region=${region}&id=${id}`
   )
   const script = scripts[language]
 
-  if (isLoading) return <div>Cargando...</div>
+  if (isLoading) return  <LoadingComponent />
 
   const {data: summonerMastery} = response
   const { masteryCounts, totalSummonerMastery, chestsEarned } = summonerMastery
@@ -42,6 +43,7 @@ export default function SummonerMastery({
         language={language}
         gameVersion={gameVersion}
         championsData={summonerMastery.championsMastery}
+        LoadingComponent={LoadingComponent}
       />
     </div>
   )

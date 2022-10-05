@@ -6,11 +6,14 @@ import Image from "next/image"
 export default function SummonerRank({
   summonerInfo: { region, id },
   language,
+  LoadingComponent,
 }) {
-  const { response } = useFetch(`/api/summoner-rank?region=${region}&id=${id}`)
+  const { response, isLoading } = useFetch(
+    `/api/summoner-rank?region=${region}&id=${id}`
+  )
   const script = scripts[language]
 
-  if (!response) return <div>Loading...</div>
+  if (isLoading) return <LoadingComponent />
 
   return (
     <div className={styles.summonerRank}>

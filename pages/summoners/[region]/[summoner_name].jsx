@@ -9,6 +9,7 @@ import NavBar from "src/components/navBar"
 import SummonerRank from "src/components/summonerRank"
 import SummonerMastery from "src/components/summonerMastery"
 import MatchHistory from "src/components/matchsHistory"
+import Loading from "src/components/loading"
 
 const renderComponent = (type, props) => {
   const componentCase = {
@@ -39,12 +40,12 @@ export default function SummonerProfile() {
   const isAllLoaded = requeriedsToRender.every((state) => state)
   if (!isAllLoaded) {
     return (
-      <div>
+      <>
         <Head>
           <title>{`Searching ${summoner_name}`}</title>
         </Head>
-        <i className="fa-solid fa-hourglass"></i>
-      </div>
+        <Loading />
+      </>
     )
   }
 
@@ -71,6 +72,7 @@ export default function SummonerProfile() {
           {...summonerInfo.data}
           gameVersion={gameVersion}
           language={language}
+          LoadingComponent={<Loading />}
         />
         <NavBar actualComponent={component} setComponent={setComponent} />
       </div>
@@ -78,6 +80,7 @@ export default function SummonerProfile() {
         summonerInfo: summonerInfo.data,
         language,
         gameVersion,
+        LoadingComponent: Loading,
       })}
     </div>
   )

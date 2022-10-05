@@ -13,14 +13,14 @@ const queueTranslate = {
   1400: "Ultimate Spell Book",
 }
 
-export default function MatchHistory({ summonerInfo, gameVersion, language }) {
+export default function MatchHistory({ summonerInfo, gameVersion, language, LoadingComponent }) {
   const { response, isLoading } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
 
   const script = scripts[language]
 
-  if (isLoading) return <div>Loading</div>
+  if (isLoading) return <LoadingComponent />
   return (
     <div className={styles.history}>
       <h1>{script.title}</h1>
