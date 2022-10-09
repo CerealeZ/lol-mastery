@@ -13,7 +13,12 @@ const queueTranslate = {
   1400: "Ultimate Spell Book",
 }
 
-export default function MatchHistory({ summonerInfo, gameVersion, language, LoadingComponent }) {
+export default function MatchHistory({
+  summonerInfo,
+  gameVersion,
+  language,
+  LoadingComponent,
+}) {
   const { response, isLoading } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
@@ -27,9 +32,28 @@ export default function MatchHistory({ summonerInfo, gameVersion, language, Load
       <div className={styles.matchList}>
         {response.data.map(
           (
-            { championName, kills, deaths, assists, win, itemIds, queueId },
+            {
+              isOkay,
+              data: {
+                championName,
+                kills,
+                deaths,
+                assists,
+                win,
+                itemIds,
+                queueId,
+              },
+            },
             index
           ) => {
+            if (!isOkay) {
+              return ( // TODO: Do a better error component
+                <div key={index}>
+                  <p>Not data found, maybe too many requests</p>
+                </div>
+              )
+            }
+
             return (
               <div className={styles.match} key={index}>
                 <div>

@@ -27,20 +27,28 @@ export default async function getSummonerMatchs(req, res) {
     )
     const matchsRawInfo = await Promise.allSettled(
       matchsId.map((id) =>
-        axios
-          .get(
-            `https://${routingName}.api.riotgames.com/lol/match/v5/matches/${id}?api_key=${process.env.RIOT_API}`
-          )
-          .then((data) => data.data)
+        axios.get(
+          `https://${routingName}.api.riotgames.com/lol/match/v5/matches/${id}?api_key=${process.env.RIOT_API}`
+        )
       )
     )
 
-    const matchPrettyInfo = matchsRawInfo.map(({ value: match }) => {
-      const { info } = match
+    const matchPrettyInfo = matchsRawInfo.map((response) => {
+      if (response.status === "rejected") {
+        const { reason } = response
+        return {
+          isOkay: false,
+          data: {
+            code: reason.code,
+          },
+          status: reason.status,
+        }
+      }
+      const { value } = response
+      const { info } = value.data
       const summonerScore = info.participants.find(
         (participant) => participant.puuid === puuid
       )
-
       const { kills, deaths, assists, championId, win, championName } =
         summonerScore
       const itemIds = Array.from(
@@ -48,14 +56,18 @@ export default async function getSummonerMatchs(req, res) {
         (v, i) => summonerScore[`item${i}`]
       )
       return {
-        queueId: info.queueId,
-        itemIds,
-        championId,
-        kills,
-        deaths,
-        assists,
-        win,
-        championName,
+        isOkay: true,
+        data: {
+          queueId: info.queueId,
+          itemIds,
+          championId,
+          kills,
+          deaths,
+          assists,
+          win,
+          championName,
+        },
+        status: value.status,
       }
     })
 
