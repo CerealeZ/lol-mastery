@@ -2,16 +2,17 @@ import { useState, useCallback } from "react"
 import styles from "./styles.module.css"
 import useFetch from "src/hooks/useFetch"
 import scripts from "./languages"
+import Error from "src/components/error"
 
 export default function ChampionsMasteryTable({
   championsData,
   language,
   gameVersion,
-  LoadingComponent
+  LoadingComponent,
 }) {
   const [sortedBy, setSortedBy] = useState("championPoints")
   const [isAscendant, setAscendant] = useState(false)
-  const { response: championsInfo, isLoading } = useFetch(
+  const { response, isLoading, reload } = useFetch(
     `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/${language}/champion.json`,
     undefined,
     (patchInfo) => Object.entries(patchInfo.data) //Riot Api gives us an object with champions data, so we need to convert it into an array
@@ -19,13 +20,13 @@ export default function ChampionsMasteryTable({
   const script = scripts[language]
   const getChampionDataById = useCallback(
     (championId) => {
-      if (!championsInfo?.isOkay) return
-      const [foundChampion] = championsInfo.data.filter(
+      if (!response?.isOkay) return
+      const [foundChampion] = response.data.filter(
         ([, championData]) => championData.key == championId
       )
       return foundChampion[1]
     },
-    [championsInfo]
+    [response]
   )
   const sortHandle = (sortProperty) => () => {
     if (sortedBy === sortProperty) {
@@ -36,6 +37,12 @@ export default function ChampionsMasteryTable({
     setAscendant(false)
   }
   if (isLoading) return <LoadingComponent />
+
+  if (!response.isOkay) {
+    return (
+      <Error language={language} reload={reload} status={response.status} />
+    )
+  }
 
   return (
     <div className={styles.tableContainer}>

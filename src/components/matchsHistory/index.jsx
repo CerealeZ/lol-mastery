@@ -2,6 +2,7 @@ import Image from "next/image"
 import useFetch from "src/hooks/useFetch"
 import styles from "./styles.module.css"
 import scripts from "./languages"
+import Error from "src/components/error"
 
 const queueTranslate = {
   400: "Normal Recruit",
@@ -19,13 +20,20 @@ export default function MatchHistory({
   language,
   LoadingComponent,
 }) {
-  const { response, isLoading } = useFetch(
+  const { response, isLoading, reload } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
 
   const script = scripts[language]
 
   if (isLoading) return <LoadingComponent />
+
+  if (!response.isOkay) {
+    return (
+      <Error status={response.status} language={language} reload={reload} />
+    )
+  }
+
   return (
     <div className={styles.history}>
       <h1>{script.title}</h1>
@@ -47,7 +55,8 @@ export default function MatchHistory({
             index
           ) => {
             if (!isOkay) {
-              return ( // TODO: Do a better error component
+              return (
+                // TODO: Do a better error component
                 <div key={index}>
                   <p>Not data found, maybe too many requests</p>
                 </div>

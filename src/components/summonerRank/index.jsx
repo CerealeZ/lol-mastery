@@ -2,18 +2,25 @@ import useFetch from "src/hooks/useFetch"
 import styles from "./styles.module.css"
 import scripts from "./languages"
 import Image from "next/image"
+import Error from "src/components/error"
 
 export default function SummonerRank({
   summonerInfo: { region, id },
   language,
   LoadingComponent,
 }) {
-  const { response, isLoading } = useFetch(
+  const { response, isLoading, reload } = useFetch(
     `/api/summoner-rank?region=${region}&id=${id}`
   )
   const script = scripts[language]
 
   if (isLoading) return <LoadingComponent />
+
+  if (!response.isOkay) {
+    return (
+      <Error status={response.status} language={language} reload={reload} />
+    )
+  }
 
   return (
     <div className={styles.summonerRank}>
