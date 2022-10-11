@@ -1,18 +1,20 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { regions } from "./regions.js"
 import styles from "./styles.module.css"
 import scripts from "./languajes"
 
-const handleInput =
-  (setter) =>
-  ({ target: { name: property, value } }) => {
-    setter((prev) => ({ ...prev, [property]: value }))
-  }
-
-const preventDefault = (fn) => (e) => {
-  e.preventDefault()
-  return fn(e)
+const handleInputValue = (setter) => (event) => {
+  const { name, value } = event.target
+  setter((prev) => {
+    const newValue = {
+      ...prev,
+      [name]: value,
+    }
+    return newValue
+  })
 }
+
 export default function SummonerSearcher({ language }) {
   const router = useRouter()
   const [query, setQuery] = useState({
@@ -21,20 +23,25 @@ export default function SummonerSearcher({ language }) {
   })
   const [hasError, setError] = useState(false)
   const script = scripts[language]
-  const searchUser = async ({ name, region }) => {
-    // TODO: do a form checker
-    if (!name.trim()) {
+  const handleQuery = handleInputValue(setQuery)
+
+  const searchUser = async () => {
+    const { name, region } = query
+    if (!name.trim() || !region.trim()) {
       setError(true)
       return
-    } else {
-      setError(false)
     }
     router.push(`/summoners/${region}/${encodeURIComponent(name)}`)
+    setError(false)
   }
+
   return (
     <form
       className={styles.searchBox}
-      onSubmit={preventDefault(() => searchUser(query))}
+      onSubmit={(e) => {
+        e.preventDefault()
+        searchUser()
+      }}
     >
       <input
         type={"text"}
@@ -44,7 +51,7 @@ export default function SummonerSearcher({ language }) {
         className={`${styles.searchBox__input} ${
           styles["searchBox__input--name"]
         } ${hasError ? styles["searchBox__input--error"] : ""}`}
-        onInput={handleInput(setQuery)}
+        onInput={handleQuery}
         required
       />
       <select
@@ -52,19 +59,13 @@ export default function SummonerSearcher({ language }) {
         name="region"
         className={`${styles.searchBox__input} ${styles["searchBox__input--select"]}`}
         value={query.region}
-        onChange={handleInput(setQuery)}
+        onInput={handleQuery}
       >
-        <option value={"la1"}>LAN</option>
-        <option value={"na1"}>NA</option>
-        <option value={"br1"}>BR</option>
-        <option value={"eun1"}>EUNE</option>
-        <option value={"euw1"}>EUW</option>
-        <option value={"la2"}>LAS</option>
-        <option value={"oc1"}>OCE</option>
-        <option value={"ru1"}>RU</option>
-        <option value={"tr1"}>TR</option>
-        <option value={"jp1"}>JP</option>
-        <option value={"kr"}>KR</option>
+        {regions.map(({ value, name }, index) => (
+          <option key={index} value={value}>
+            {name}
+          </option>
+        ))}
       </select>
 
       <button
