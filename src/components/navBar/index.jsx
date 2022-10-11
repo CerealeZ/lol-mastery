@@ -1,23 +1,5 @@
 import styles from "./styles.module.css"
-import { useEffect } from "react"
-
-export const buttons = [
-  {
-    title: "Rank",
-    value: "rank",
-    icon: "fa-solid fa-ranking-star",
-  },
-  {
-    title: "Matchs",
-    value: "history",
-    icon: "fa-regular fa-file-lines",
-  },
-  {
-    title: "Champion Ranking",
-    value: "mastery",
-    icon: "fa-solid fa-medal",
-  },
-]
+import { buttons } from "./buttons.js"
 
 export default function NavBar({ setComponent, actualComponent }) {
   return (
@@ -28,13 +10,11 @@ export default function NavBar({ setComponent, actualComponent }) {
             key={index}
             title={title || "Coming soon"}
             onClick={() => setComponent(value)}
-            className={styles.navBar__button}
-            style={{
-              ...(value === actualComponent && {
-                backgroundColor: "var(--btnBack)",
-                color: "var(--btnText)",
-              }),
-            }}
+            className={`${styles.navBar__button} ${
+              actualComponent === value
+                ? styles["navBar__button--selected"]
+                : ""
+            }`}
           >
             <i className={icon || "fa-solid fa-question"}></i>
           </div>

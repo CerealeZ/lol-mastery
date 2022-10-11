@@ -17,3 +17,8 @@
   width: 22%;
   /* border-right: 1px solid #fffffe; */
 }
+
+.navBar__button--selected {
+  background-color: var(--btnBack);
+  color: var(--btnText);
+}
