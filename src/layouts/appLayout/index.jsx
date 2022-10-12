@@ -3,6 +3,7 @@ import ConfigMenu from "src/components/configMenu"
 import { useContext, useState } from "react"
 import AppContext from "src/context/AppContext"
 import ModalBox from "src/templates/modal"
+import styles from "./styles.module.css"
 
 export default function Layout({ children }) {
   const { language, theme, setNewLanguage, setNewTheme } =
@@ -10,45 +11,14 @@ export default function Layout({ children }) {
   const [isSettingsOpen, setSettingsOpen] = useState(false)
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: "15px",
-          padding: "15px",
-          backgroundColor: "var(--cardBack)",
-        }}
-      >
-        <div
-          style={{
-            flexGrow: 1,
-          }}
-        >
+    <div className={styles.layout}>
+      <div className={styles.layout__header}>
+        <div className={styles.layout__header__searcherContainer}>
           <SummonerSearcher language={language} />
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "var(--cardBack)",
-          }}
-        >
+        <div className={styles.layout__header__configButtonContainer}>
           <button
-            style={{
-              backgroundColor: "var(--btnBack)",
-              color: "var(--btnText)",
-              padding: "10px",
-              borderRadius: "15px",
-              borderWidth: "1px",
-              borderColor: "transparent",
-              // backgroundColor: "#fffffe",
-            }}
+            className={styles.layout__header__configButton}
             type="button"
             onClick={() => setSettingsOpen((prev) => !prev)}
           >
@@ -56,31 +26,22 @@ export default function Layout({ children }) {
           </button>
         </div>
       </div>
-      <div
-        style={{
-          flexGrow: 1,
-          backgroundColor: "var(--back)",
-        }}
-      >
-        {children}
-        <div>
-          {isSettingsOpen && (
-            <ModalBox
-              style={{
-                backgroundColor: "var(--back)",
-              }}
-              onRemoveClick={() => setSettingsOpen(false)}
-            >
-              <ConfigMenu
-                language={language}
-                setNewLanguage={setNewLanguage}
-                theme={theme}
-                setNewTheme={setNewTheme}
-              />
-            </ModalBox>
-          )}
-        </div>
-      </div>
+      <div className={styles.layout__children}>{children}</div>
+      {isSettingsOpen && (
+        <ModalBox
+          style={{
+            backgroundColor: "var(--back)",
+          }}
+          onRemoveClick={() => setSettingsOpen(false)}
+        >
+          <ConfigMenu
+            language={language}
+            setNewLanguage={setNewLanguage}
+            theme={theme}
+            setNewTheme={setNewTheme}
+          />
+        </ModalBox>
+      )}
     </div>
   )
 }
