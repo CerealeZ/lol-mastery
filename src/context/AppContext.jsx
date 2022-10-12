@@ -4,6 +4,20 @@ import themes from "./themes.module.css"
 
 const AppContext = createContext()
 
+const localStoreHelper = (key, setter) => (method, newValue) => {
+  const methodCase = {
+    get: () => {
+      const value = localStorage.getItem(key)
+      setter(value || newValue)
+    },
+    set: () => {
+      localStorage.setItem(key, newValue)
+      setter(newValue)
+    },
+  }
+  methodCase[method]()
+}
+
 export function AppProvider({ children }) {
   const { response: gameVersion } = useFetch(
     "https://ddragon.leagueoflegends.com/api/versions.json",
@@ -11,36 +25,33 @@ export function AppProvider({ children }) {
     (versions) => versions[0]
   )
   const [theme, setTheme] = useState(0)
-  const [language, setLanguage] = useState("")
+  const themeHelper = localStoreHelper("theme", setTheme)
 
-  useEffect(() => {
+  const [language, setLanguage] = useState("")
+  const languageHelper = localStoreHelper("lang", setLanguage)
+
+  useEffect(function getDataFromUser() {
     const getUserLanguage = () => {
-      const prefUserLanguage = localStorage.getItem("lang") || "en_US"
-      setLanguage(prefUserLanguage)
+      languageHelper("get", "en_US")
     }
     const getUserTheme = () => {
-      const prefUserTheme = localStorage.getItem("theme") || 1
-      setTheme(prefUserTheme)
+      themeHelper("get", 1)
     }
-
     getUserLanguage()
     getUserTheme()
   }, [])
 
   const setNewLanguage = (language) => {
-    localStorage.setItem("lang", language)
-    setLanguage(language)
+    languageHelper("set", language)
   }
-
   const setNewTheme = (theme) => {
-    localStorage.setItem("theme", theme)
-    setTheme(theme)
+    themeHelper("set", theme)
   }
 
   return (
     <AppContext.Provider
       value={{
-        gameVersion:gameVersion?.data,
+        gameVersion: gameVersion?.data,
         language,
         setNewLanguage,
         setNewTheme,
@@ -48,7 +59,7 @@ export function AppProvider({ children }) {
       }}
     >
       <div className={themes[`theme${theme}`]}>
-        {(language || gameVersion) && children}
+        {gameVersion?.isOkay && children}
       </div>
     </AppContext.Provider>
   )
