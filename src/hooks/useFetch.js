@@ -27,7 +27,7 @@ const useFetch = (url, initialData = undefined, callback) => {
     } finally {
       setLoading(false)
     }
-  }, [url])
+  }, [url, initialData])
 
   useEffect(() => {
     fetch()
