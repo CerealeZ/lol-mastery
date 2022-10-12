@@ -4,6 +4,16 @@ import themes from "./themes.module.css"
 
 const AppContext = createContext()
 
+const getDeviceType = (windowWidth) => {
+  const sizes = [
+    // Size must be descendent
+    { name: "desktop", size: 1024 },
+    { name: "mobile", size: 600 },
+  ]
+  const { name } = sizes.find(({ size }) => windowWidth >= size) || sizes.at(-1)
+  return name
+}
+
 const localStoreHelper = (key, setter) => (method, newValue) => {
   const methodCase = {
     get: () => {
@@ -30,6 +40,8 @@ export function AppProvider({ children }) {
   const [language, setLanguage] = useState("")
   const languageHelper = localStoreHelper("lang", setLanguage)
 
+  const [device, setDevice] = useState("")
+
   useEffect(function getDataFromUser() {
     const getUserLanguage = () => {
       languageHelper("get", "en_US")
@@ -37,6 +49,12 @@ export function AppProvider({ children }) {
     const getUserTheme = () => {
       themeHelper("get", 1)
     }
+    const getDevice = () => {
+      setDevice(getDeviceType(window.innerWidth))
+      window.onresize = () => setDevice(getDeviceType(window.innerWidth))
+    }
+
+    getDevice()
     getUserLanguage()
     getUserTheme()
   }, [])
@@ -56,6 +74,7 @@ export function AppProvider({ children }) {
         setNewLanguage,
         setNewTheme,
         theme,
+        device,
       }}
     >
       <div className={themes[`theme${theme}`]}>
