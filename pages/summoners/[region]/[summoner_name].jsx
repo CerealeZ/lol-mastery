@@ -11,8 +11,9 @@ import SummonerMastery from "src/components/summonerMastery"
 import MatchHistory from "src/components/matchsHistory"
 import Loading from "src/components/loading"
 import Error from "src/components/error"
+import SummonerProfileTemplate from "src/templates/summonerProfile"
 
-const renderComponent = (type, props) => {
+const renderSummonerTab = (type, props) => {
   const componentCase = {
     rank: SummonerRank,
     history: MatchHistory,
@@ -43,6 +44,7 @@ export default function SummonerProfile() {
     !isLoading,
   ]
   const isAllLoaded = requeriedsToRender.every((state) => state)
+  
   if (!isAllLoaded) {
     return (
       <>
@@ -70,25 +72,30 @@ export default function SummonerProfile() {
   }
 
   return (
-    <div>
+    <>
       <Head>
         <title>{`${summoner_name} - League's Mastery`}</title>
       </Head>
-      <div style={{ position: "sticky", top: 0, left: 0 }}>
-        <SummonerPreview
-          {...summonerInfo.data}
-          gameVersion={gameVersion}
-          language={language}
-          LoadingComponent={<Loading />}
-        />
-        <NavBar actualComponent={component} setComponent={setComponent} />
-      </div>
-      {renderComponent(component, {
-        summonerInfo: summonerInfo.data,
-        language,
-        gameVersion,
-        LoadingComponent: Loading,
-      })}
-    </div>
+      <SummonerProfileTemplate
+        profileViewer={
+          <SummonerPreview
+            {...summonerInfo.data}
+            gameVersion={gameVersion}
+            language={language}
+            LoadingComponent={<Loading />}
+          />
+        }
+        navigation={
+          <NavBar actualComponent={component} setComponent={setComponent} />
+        }
+      >
+        {renderSummonerTab(component, {
+          summonerInfo: summonerInfo.data,
+          language,
+          gameVersion,
+          LoadingComponent: Loading,
+        })}
+      </SummonerProfileTemplate>
+    </>
   )
 }
