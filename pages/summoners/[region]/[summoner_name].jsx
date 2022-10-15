@@ -25,7 +25,7 @@ const renderSummonerTab = (type, props) => {
 
 export default function SummonerProfile() {
   const { summoner_name, region } = useRouter().query
-  const { language, gameVersion } = useContext(AppContext)
+  const { language, gameVersion, device, devices } = useContext(AppContext)
   const {
     response: summonerInfo,
     isLoading,
@@ -36,39 +36,14 @@ export default function SummonerProfile() {
       : ""
   )
   const [component, setComponent] = useState("rank")
-  const requeriedsToRender = [
-    summoner_name,
-    region,
+
+  const basicComponentProps = {
+    summonerInfo: summonerInfo.data,
     language,
     gameVersion,
-    !isLoading,
-  ]
-  const isAllLoaded = requeriedsToRender.every((state) => state)
-  
-  if (!isAllLoaded) {
-    return (
-      <>
-        <Head>
-          <title>{`Searching ${summoner_name}`}</title>
-        </Head>
-        <Loading />
-      </>
-    )
-  }
-
-  if (!summonerInfo.isOkay) {
-    return (
-      <>
-        <Head>
-          <title>{`Error`}</title>
-        </Head>
-        <Error
-          status={summonerInfo.status}
-          language={language}
-          reload={summonerInfo.status !== 404 && reload}
-        />
-      </>
-    )
+    LoadingComponent: Loading,
+    device,
+    devices,
   }
 
   return (
@@ -76,7 +51,10 @@ export default function SummonerProfile() {
       <Head>
         <title>{`${summoner_name} - League's Mastery`}</title>
       </Head>
+
       <SummonerProfileTemplate
+        device={device}
+        devices={devices}
         profileViewer={
           <SummonerPreview
             {...summonerInfo.data}
@@ -88,13 +66,23 @@ export default function SummonerProfile() {
         navigation={
           <NavBar actualComponent={component} setComponent={setComponent} />
         }
+        loading={isLoading && <Loading />}
+        error={
+          !summonerInfo.isOkay && (
+            <Error
+              status={summonerInfo.status}
+              language={language}
+              reload={summonerInfo.status !== 404 && reload}
+            />
+          )
+        }
+        components={{
+          ranks: <SummonerRank {...basicComponentProps} />,
+          matchs: <MatchHistory {...basicComponentProps} />,
+          masteries: <SummonerMastery {...basicComponentProps} />,
+        }}
       >
-        {renderSummonerTab(component, {
-          summonerInfo: summonerInfo.data,
-          language,
-          gameVersion,
-          LoadingComponent: Loading,
-        })}
+        {renderSummonerTab(component, basicComponentProps)}
       </SummonerProfileTemplate>
     </>
   )

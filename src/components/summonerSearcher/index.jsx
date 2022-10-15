@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
 import { regions } from "./regions.js"
-import styles from "./styles.module.css"
 import scripts from "./languajes"
 
 const handleInputValue = (setter) => (event) => {
@@ -37,7 +36,7 @@ export default function SummonerSearcher({ language }) {
 
   return (
     <form
-      className={styles.searchBox}
+      className={"searchBox"}
       onSubmit={(e) => {
         e.preventDefault()
         searchUser()
@@ -48,16 +47,16 @@ export default function SummonerSearcher({ language }) {
         value={query.name}
         name="name"
         placeholder={script.placeholder}
-        className={`${styles.searchBox__input} ${
-          styles["searchBox__input--name"]
-        } ${hasError ? styles["searchBox__input--error"] : ""}`}
+        className={`searchBox__input searchBox__input--name ${
+          hasError ? "searchBox__input--error" : ""
+        }`}
         onInput={handleQuery}
         required
       />
       <select
         id={"region"}
         name="region"
-        className={`${styles.searchBox__input} ${styles["searchBox__input--select"]}`}
+        className={`searchBox__input searchBox__input--select`}
         value={query.region}
         onInput={handleQuery}
       >
@@ -69,11 +68,54 @@ export default function SummonerSearcher({ language }) {
       </select>
 
       <button
-        className={`${styles.searchBox__input} ${styles["searchBox__input--button"]}`}
+        className={`searchBox__input searchBox__input--button`}
         type="submit"
       >
         <i className="fa-solid fa-magnifying-glass" />
       </button>
+
+      <style>
+        {`
+      .searchBox {
+        font-family: RobotoNormal;
+        display: flex;
+        gap: 10px;
+        background-color: var(--cardBack);
+      }
+      
+      .searchBox__input {
+        padding: 10px;
+        border-radius: 15px;
+        border-width: 1px;
+        border-color:transparent;
+        background-color: #fffffe;
+      }
+      
+      .searchBox__input:focus {
+        outline-color: #078080;
+      }
+      
+      .searchBox__input--name {
+        width: 0;
+        flex-grow: 1;
+        /* flex-grow: 1; */
+      }
+      
+      .searchBox__input--select {
+        border: none;
+        appearance: none;
+      }
+      
+      .searchBox__input--button {
+        background-color: var(--btnBack);
+        color: var(--btnText)
+      }
+      
+      .searchBox__input--error {
+        border: 1px solid rgb(250, 54, 54);
+      }
+      `}
+      </style>
     </form>
   )
 }

@@ -1,5 +1,4 @@
 import useFetch from "src/hooks/useFetch"
-import styles from "./styles.module.css"
 import scripts from "./languages"
 import Image from "next/image"
 import Error from "src/components/error"
@@ -14,72 +13,85 @@ export default function SummonerRank({
   )
   const script = scripts[language]
 
-  if (isLoading) return <LoadingComponent />
-
-  if (!response.isOkay) {
-    return (
-      <Error status={response.status} language={language} reload={reload} />
-    )
-  }
-
   return (
-    <div className={styles.summonerRank}>
-      <h1>{script.title}</h1>
-      {response.data.map(
-        (
-          {
-            losses,
-            wins,
-            queueType,
-            rank,
-            tier,
-            leaguePoints,
-            winrate,
-            miniSeriesProgress,
-          },
-          index
-        ) => {
-          return (
-            <div className={styles.summonerRank__queue} key={index}>
+    <section className="section box box--secundary">
+      <h2>{script.title}</h2>
+      {isLoading ? (
+        <LoadingComponent />
+      ) : response.isOkay ? (
+        response.data.map(
+          (
+            {
+              losses,
+              wins,
+              queueType,
+              rank,
+              tier,
+              leaguePoints,
+              winrate,
+              miniSeriesProgress,
+            },
+            index
+          ) => (
+            <div key={index} className="box box--primary">
               <h2>{script[queueType]}</h2>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <div className="queueBox__details">
                 <div>
                   <Image
                     src={`/ranked_embleds/Emblem_${tier}.png`}
-                    height={150}
-                    width={150}
+                    height={100}
+                    width={100}
                   />
                 </div>
-                <div className={styles.summonerRank__queue__info}>
-                  <p>
-                    {script.tier.tiers[tier] || tier} {rank}
-                  </p>
-                  <p>
-                    {!miniSeriesProgress
-                      ? `${script.points} ${leaguePoints}`
-                      : miniSeriesProgress}
-                  </p>
-                  <p>
-                    {script.winrate} {winrate}
-                  </p>
-                  <p>
-                    {script.wins} {wins}
-                  </p>
-                  <p>
-                    {script.losses} {losses}
-                  </p>
+                <div className="queueBox__textBox box box--secundary">
+                  <div className="queueBox__titleBox">
+                    <h3>
+                      {script.tier.tiers[tier] || tier} {rank}
+                    </h3>
+                    <p>
+                      {!miniSeriesProgress
+                        ? `${leaguePoints} ${"LP"}`
+                        : miniSeriesProgress}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {script.winrate} {winrate}
+                    </p>
+                    <p>
+                      {script.wins} {wins}
+                    </p>
+                    <p>
+                      {script.losses} {losses}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           )
-        }
+        )
+      ) : (
+        <Error status={response.status} language={language} reload={reload} />
       )}
-    </div>
+      <style jsx>{`
+        .queueBox__details {
+          display: flex;
+          gap: 10px;
+        }
+        .queueBox__textBox {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          flex-grow: 1;
+        }
+        .queueBox__titleBox {
+          grid-area: rank;
+          display: flex;
+          gap: 10px;
+          align-items: baseline;
+        }
+      `}</style>
+    </section>
   )
 }
 

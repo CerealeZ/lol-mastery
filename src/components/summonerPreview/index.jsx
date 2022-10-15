@@ -1,25 +1,37 @@
 import Image from "next/image"
-import styles from "./styles.module.css"
 
 export default function SummonerPreview({
   name,
   profileIconId,
   summonerLevel,
-  gameVersion
+  gameVersion,
 }) {
   return (
-    <div className={styles.summonerPreview}>
+    <header className="summonerPreview box box--secundary">
       <Image
         height={50}
         width={50}
         src={`https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/profileicon/${profileIconId}.png`}
         alt={`${name}'s profile icon`}
-      ></Image>
-      <div className={styles.summonerPreview__data}>
-        <span>{name}</span>
+      />
+      <div className="summonerPreview__data">
+        <h1>{name}</h1>
         <span>LvL: {summonerLevel}</span>
       </div>
-    </div>
-  
+      <style jsx>
+        {`
+          .summonerPreview {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+          }
+
+          .summonerPreview__data {
+            display: flex;
+            flex-direction: column;
+          }
+        `}
+      </style>
+    </header>
   )
 }

@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react"
-import styles from "./styles.module.css"
 import useFetch from "src/hooks/useFetch"
 import scripts from "./languages"
 import Error from "src/components/error"
@@ -45,10 +44,10 @@ export default function ChampionsMasteryTable({
   }
 
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
+    <div className={`tableContainer box box--primary`}>
+      <table className={"table"}>
         <caption>{script.caption}</caption>
-        <thead className={styles.thead}>
+        <thead className={"thead"}>
           <tr>
             <th onClick={sortHandle("name")}>{script.name}</th>
             <th onClick={sortHandle("championLevel")}>{script.level}</th>
@@ -88,7 +87,7 @@ export default function ChampionsMasteryTable({
                 chestGranted,
                 name,
               }) => (
-                <tr key={championId} className={styles.tr}>
+                <tr key={championId} className={"tr"}>
                   <td>{name}</td>
                   <td>{championLevel}</td>
                   <td>{championPoints}</td>
@@ -99,6 +98,33 @@ export default function ChampionsMasteryTable({
             )}
         </tbody>
       </table>
+      <style jsx>
+        {`
+          .tableContainer {
+            overflow: auto;
+            color: var(--text);
+          }
+
+          .table {
+            font-family: RobotoNormal;
+            width: 100%;
+          }
+
+          .thead {
+            background-color: var(--btnBack);
+            color: var(--btnText);
+          }
+
+          .tr:nth-child(odd) {
+            background-color: var(--back);
+            color: var(--text);
+          }
+          .tr:nth-child(even) {
+            background-color: var(--cardBack);
+            color: var(--cardText);
+          }
+        `}
+      </style>
     </div>
   )
 }

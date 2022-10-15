@@ -1,4 +1,3 @@
-import styles from "./styles.module.css"
 import { useRouter } from "next/router"
 import scripts from "./languages"
 
@@ -10,22 +9,30 @@ export default function Welcome({ language }) {
 
   if (!script) return <></>
   return (
-    <div className={styles.welcome}>
-      <div className={styles.welcome__title}>
+    <div className={"welcome box"}>
+      <div className={"box box--primary"}>
         <h1>{script.title}</h1>
       </div>
-      <div className={styles.welcome__desc}>
+      <div className={"box box--secundary"}>
         <h2>{script.desc}</h2>
         <p>{script.meeting[1]}</p>
         <button
           onClick={() => {
             router.push(`/summoners/${MY_SUMMONER_QUERY}`)
           }}
-          className={styles["welcome__desc--button"]}
+          className={"btn"}
         >
           {script.meeting[2]}
         </button>
       </div>
+
+      <style jsx>
+        {`
+          .welcome {
+            text-align: center;
+          }
+        `}
+      </style>
     </div>
   )
 }

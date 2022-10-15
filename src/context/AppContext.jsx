@@ -4,14 +4,20 @@ import themes from "./themes.module.css"
 
 const AppContext = createContext()
 
+const devices = {
+  desktop: 1024,
+  mobile: 600,
+}
+
 const getDeviceType = (windowWidth) => {
-  const sizes = [
+  const devices = [
     // Size must be descendent
     { name: "desktop", size: 1024 },
     { name: "mobile", size: 600 },
   ]
-  const { name } = sizes.find(({ size }) => windowWidth >= size) || sizes.at(-1)
-  return name
+  const device =
+    devices.find(({ size }) => windowWidth >= size) || devices.at(-1)
+  return device
 }
 
 const localStoreHelper = (key, setter) => (method, newValue) => {
@@ -75,10 +81,59 @@ export function AppProvider({ children }) {
         setNewTheme,
         theme,
         device,
+        devices,
       }}
     >
       <div className={themes[`theme${theme}`]}>
         {gameVersion?.isOkay && children}
+        <style jsx global>
+          {`
+            p,
+            h1,
+            h2,
+            h3 {
+              margin: 0;
+              padding: 0;
+            }
+
+            .box {
+              font-family: RobotoNormal;
+              padding: 10px;
+            }
+
+            .box--primary {
+              background-color: var(--back);
+              color: var(--text);
+            }
+
+            .box--secundary {
+              background-color: var(--cardBack);
+              color: var(--cardText);
+            }
+
+            .section {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+
+            .btn {
+              background-color: var(--btnBack);
+              color: var(--btnText);
+              padding: 10px;
+              border-radius: 15px;
+              border-width: 1px;
+              border-color: transparent;
+              cursor: pointer;
+            }
+
+            @media (min-width: ${devices.desktop}px) {
+              .box {
+                border-radius: 15px;
+              }
+            }
+          `}
+        </style>
       </div>
     </AppContext.Provider>
   )
