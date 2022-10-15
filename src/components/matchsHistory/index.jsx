@@ -3,16 +3,6 @@ import useFetch from "src/hooks/useFetch"
 import scripts from "./languages"
 import Error from "src/components/error"
 
-const queueTranslate = {
-  400: "Normal Recruit",
-  420: "Solo / Duo",
-  430: "Blind Pick",
-  440: "Flex",
-  450: "ARAM",
-  700: "Clash",
-  1400: "Ultimate Spell Book",
-}
-
 export default function MatchHistory({
   summonerInfo,
   gameVersion,
