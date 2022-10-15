@@ -1,11 +1,17 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from "axios"
 
+const responseFormat = {
+  data: undefined,
+  status: undefined,
+  isOkay: undefined,
+}
+
 const useFetch = (url, initialData = undefined, callback) => {
-  const [response, setResponse] = useState(initialData)
+  const [response, setResponse] = useState(initialData || responseFormat)
   const [isLoading, setLoading] = useState(true)
   const fetch = useCallback(async () => {
-    setResponse(initialData)
+    setResponse(responseFormat)
     if (!url) return
     try {
       setLoading(true)
