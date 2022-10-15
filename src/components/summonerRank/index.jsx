@@ -41,6 +41,7 @@ export default function SummonerRank({
                     src={`/ranked_embleds/Emblem_${tier}.png`}
                     height={100}
                     width={100}
+                    alt={""}
                   />
                 </div>
                 <div className="queueBox__textBox box box--secundary">
