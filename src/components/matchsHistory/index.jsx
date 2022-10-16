@@ -16,13 +16,13 @@ export default function MatchHistory({
   const script = scripts[language]
 
   return (
-    <section className="section box box--secundary">
+    <section className="profileBlock profileBlock--section">
       <h2>{script.title}</h2>
       {isLoading ? (
         <LoadingComponent />
       ) : response.isOkay ? (
         <>
-          <div className={"matchList"}>
+          <div className={"matchList "}>
             {response.data.map(
               (
                 {
@@ -49,7 +49,7 @@ export default function MatchHistory({
                 }
 
                 return (
-                  <div className={`match box--primary`} key={index}>
+                  <div className={`match profileBlock__child`} key={index}>
                     <div>
                       <Image
                         width={100}
@@ -62,10 +62,26 @@ export default function MatchHistory({
                       style={{
                         minWidth: "5rem",
                       }}
-                      className={"box box--secundary"}
+                      className={""}
                     >
                       <p className={"match__box__text"}>
-                        {win ? script.result.win : script.result.loss}
+                        {win ? (
+                          <span
+                            style={{
+                              color: "#9e9eff",
+                            }}
+                          >
+                            {script.result.win}
+                          </span>
+                        ) : (
+                          <span
+                            style={{
+                              color: "red",
+                            }}
+                          >
+                            {script.result.loss}
+                          </span>
+                        )}
                       </p>
                       <p className={"match__box__text"}>
                         {script.queues[queueId]}
@@ -105,6 +121,7 @@ export default function MatchHistory({
             display: flex;
             flex-direction: column;
             gap: 5px;
+           
           }
 
           .match {
@@ -112,7 +129,6 @@ export default function MatchHistory({
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 10px;
             --borderRadius: 15px;
           }
 
@@ -125,12 +141,8 @@ export default function MatchHistory({
             border-bottom-left-radius: var(--borderRadius);
           }
 
-
           .match__box__text {
-            color: var(--text);
             text-align: center;
-            padding: 0;
-            margin: 0;
           }
         `}
       </style>

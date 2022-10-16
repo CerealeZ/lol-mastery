@@ -89,32 +89,58 @@ export function AppProvider({ children }) {
         <style jsx global>
           {`
             p,
+            span,
             h1,
             h2,
+            h3,
+            h4,
             h3 {
               margin: 0;
               padding: 0;
+              font-family: RobotoNormal;
             }
 
             .box {
-              font-family: RobotoNormal;
               padding: 10px;
+              border-radius: 15px;
             }
 
-            .box--primary {
+            .profileBlock {
+              display: flex;
               background-color: var(--back);
               color: var(--text);
             }
 
-            .box--secundary {
-              background-color: var(--cardBack);
-              color: var(--cardText);
+            .profileBlock--section {
+              flex-direction: column;
+              padding: 5px;
+              gap: 5px;
             }
 
-            .section {
-              display: flex;
-              flex-direction: column;
+            .profileBlock--header {
+              flex-direction: row;
               gap: 10px;
+            }
+
+            .profileBlock__child {
+              padding: 10px;
+              background-color: var(--cardBack);
+              color: var(--cardText);
+              border-radius: 15px;
+            }
+
+            .profileBlock__child--contracted {
+              align-self: start;
+            }
+
+            .centered {
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+            }
+            .centered__child {
+              width: 100%;
+              max-width: ${devices.desktop}px;
             }
 
             .btn {
@@ -128,8 +154,25 @@ export function AppProvider({ children }) {
             }
 
             @media (min-width: ${devices.desktop}px) {
-              .box {
+              .profileBlock {
                 border-radius: 15px;
+                padding: 10px;
+              }
+              .profileBlock--section {
+                gap: 10px;
+                background-color: var(--cardBack);
+                color: var(--cardText);
+              }
+
+              .profileBlock--header {
+                background-color: var(--cardBack);
+                color: var(--cardText);
+                gap: 10px;
+              }
+
+              .profileBlock__child {
+                background-color: var(--back);
+                color: var(--text);
               }
             }
           `}

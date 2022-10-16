@@ -14,7 +14,7 @@ export default function SummonerRank({
   const script = scripts[language]
 
   return (
-    <section className="section box box--secundary">
+    <section className="profileBlock profileBlock--section">
       <h2>{script.title}</h2>
       {isLoading ? (
         <LoadingComponent />
@@ -33,7 +33,7 @@ export default function SummonerRank({
             },
             index
           ) => (
-            <div key={index} className="box box--primary">
+            <div key={index} className="profileBlock__child">
               <h2>{script[queueType]}</h2>
               <div className="queueBox__details">
                 <div>
@@ -44,7 +44,7 @@ export default function SummonerRank({
                     alt={""}
                   />
                 </div>
-                <div className="queueBox__textBox box box--secundary">
+                <div className="queueBox__textBox">
                   <div className="queueBox__titleBox">
                     <h3>
                       {script.tier.tiers[tier] || tier} {rank}

@@ -27,7 +27,9 @@ export default function Layout({ children }) {
           </div>
         </div>
       </div>
-      <div className={"layout__children"}>{children}</div>
+      <div className={"layout__children centered"}>
+        <div className="centered__child">{children}</div>
+      </div>
       {isSettingsOpen && (
         <ModalBox
           style={{
@@ -84,6 +86,7 @@ export default function Layout({ children }) {
           .layout__children {
             flex-grow: 1;
             background-color: var(--back);
+            // max-width: ${devices.desktop}px;
           }
 
           @media (min-width: ${devices.desktop}px) {

@@ -44,7 +44,7 @@ export default function ChampionsMasteryTable({
   }
 
   return (
-    <div className={`tableContainer box box--primary`}>
+    <div className={`tableContainer profileBlock__child`}>
       <table className={"table"}>
         <caption>{script.caption}</caption>
         <thead className={"thead"}>

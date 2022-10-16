@@ -13,19 +13,13 @@ export default function SummonerProfileTemplate({
     return (
       <>
         {!loading && !error ? (
-          <div className="container">
-            <div className="layout">
-              <div className="layout__profile">{profileViewer}</div>
-              <div className="layout__ranks">{ranks}</div>
-              <div className="layout__matchs ">{matchs}</div>
-              <div className="layout__masteries">{masteries}</div>
-            </div>
+          <div className="layout">
+            <div className="layout__profile">{profileViewer}</div>
+            <div className="layout__ranks">{ranks}</div>
+            <div className="layout__matchs ">{matchs}</div>
+            <div className="layout__masteries">{masteries}</div>
             <style jsx>
               {`
-                .container {
-                  max-width: 1024px;
-                  margin: auto;
-                }
                 .layout {
                   display: grid;
                   grid-template-columns: 1fr 2fr;
@@ -84,9 +78,14 @@ export default function SummonerProfileTemplate({
           .profileTemplate {
             display: flex;
             flex-direction: column;
+            padding: 10px 0;
+            gap: 10px;
           }
 
           .profileTemplate___headerContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             position: sticky;
             top: 0;
             left: 0;

@@ -8,6 +8,7 @@ export default function SummonerMastery({
   language,
   gameVersion,
   LoadingComponent,
+  device,
 }) {
   const { response, isLoading, reload } = useFetch(
     `/api/summoner-mastery?region=${region}&id=${id}`
@@ -16,26 +17,28 @@ export default function SummonerMastery({
   const { data: summonerMastery } = response
 
   return (
-    <div className={"section box box--secundary"}>
+    <div className={"profileBlock profileBlock--section"}>
       <h2>{script.title}</h2>
       {isLoading ? (
         <LoadingComponent />
       ) : response.isOkay ? (
         <>
-          <div className="box box--primary">
-            <p>
-              {script.generalStats.playedChampions}{" "}
-              {summonerMastery.championsMastery.length}
-            </p>
-            <p>
-              {script.generalStats.totalPoints}{" "}
-              {summonerMastery.totalSummonerMastery}
-            </p>
-            <p>
-              {script.generalStats.chestsGranted}{" "}
-              {summonerMastery.chestsEarned.got} /{" "}
-              {summonerMastery.chestsEarned.total}
-            </p>
+          <div className={`stats`}>
+            <StatCard>
+              <p>{script.generalStats.playedChampions}</p>
+              <p>{summonerMastery.championsMastery.length}</p>
+            </StatCard>
+            <StatCard>
+              <p>{script.generalStats.totalPoints}</p>
+              <p>{summonerMastery.totalSummonerMastery}</p>
+            </StatCard>
+            <StatCard>
+              <p>{script.generalStats.chestsGranted}</p>
+              <p>
+                {summonerMastery.chestsEarned.got}/
+                {summonerMastery.chestsEarned.total}
+              </p>
+            </StatCard>
           </div>
           <ChampionsMasteryTable
             language={language}
@@ -47,6 +50,21 @@ export default function SummonerMastery({
       ) : (
         <Error language={language} status={response.status} reload={reload} />
       )}
+
+      <style jsx>
+        {`
+          .stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            text-align: center;
+          }
+        `}
+      </style>
     </div>
   )
+}
+
+const StatCard = ({ children }) => {
+  return <div className="profileBlock__child">{children}</div>
 }

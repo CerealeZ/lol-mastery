@@ -1,23 +1,18 @@
 export default function WelcomeTemplate({ children, devices }) {
   return (
-    <div className="layout">
-      <div className="layout__children">{children}</div>
+    <div className="welcome-template">
+      {children}
       <style jsx>
         {`
-          .layout {
+          .welcome-template {
             display: flex;
+            padding: 15px;
             flex-direction: column;
-          }
-          .layout__children {
           }
 
           @media (min-width: ${devices.desktop}px) {
-            .layout {
+            .welcome-template {
               align-items: center;
-            }
-
-            .layout__children {
-              max-width: 600px;
             }
           }
         `}

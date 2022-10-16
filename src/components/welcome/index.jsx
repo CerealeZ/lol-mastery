@@ -9,7 +9,7 @@ export default function Welcome({ language }) {
 
   if (!script) return <></>
   return (
-    <div className={"welcome box"}>
+    <div className={"welcome"}>
       <div className={"box box--primary"}>
         <h1>{script.title}</h1>
       </div>
