@@ -40,12 +40,13 @@ const initialStatus = {
 export default function useForm(initial, tests) {
   const [state, dispatch] = useReducer(reducer, initial)
   const [status, setStatus] = useState(initialStatus)
+  const [formValidations] = useState(tests)
 
   useEffect(
     function checkForm() {
-      if (!tests) return
+      if (!formValidations) return
       const errors = Object.entries(state).map(([key, value]) => {
-        const valueTests = tests[key]
+        const valueTests = formValidations[key]
         if (!valueTests) {
           return [key, []]
         }
@@ -62,7 +63,7 @@ export default function useForm(initial, tests) {
         hasError,
       })
     },
-    [state]
+    [state, formValidations]
   )
 
   return {
