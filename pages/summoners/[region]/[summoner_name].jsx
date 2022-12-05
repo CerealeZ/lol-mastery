@@ -39,7 +39,7 @@ export default function SummonerProfile() {
     theme,
     Loading: () => <Loading theme={theme} />,
     Error: (props) => (
-      <Error language={language} getScript={getScript} {...props}></Error>
+      <Error getScript={getScript} theme={theme} {...props} />
     ),
   }
 
