@@ -74,6 +74,8 @@ export default async function getSummonerMatchs(req, res) {
     res.status(200).json(matchPrettyInfo)
   } catch (error) {
     const { response } = error
-    res.status(response?.status || 500).json(error)
+    res
+    .status(response?.status || 500)
+    .json({ message: response?.data?.status?.message || "Failed to fetch" })
   }
 }

@@ -11,7 +11,9 @@ export default async function summonerRank(req, res) {
   const { region, id } = req.query
   try {
     const { data: response } = await axios.get(
-      `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${process.env.RIOT_API}`
+      `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${
+        process.env.RIOT_API
+      }`
     )
     const ranks = response.map((rankInfo) => {
       const { wins, losses, miniSeries } = rankInfo
@@ -34,6 +36,8 @@ export default async function summonerRank(req, res) {
     res.status(200).json(ranks)
   } catch (error) {
     const { response } = error
-    res.status(response?.status || 500).json(error)
+    res
+      .status(response?.status || 500)
+      .json({ message: response?.data?.status?.message || "Failed to fetch" })
   }
 }

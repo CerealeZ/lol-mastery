@@ -39,6 +39,8 @@ export default async function getSummonerMastery(req, res) {
       .json({ totalChampionsPlayed: summonerMastery.length, ...masteryResume })
   } catch (error) {
     const { response } = error
-    res.status(response?.status || 500).json(error)
+    res
+    .status(response?.status || 500)
+    .json({ message: response?.data?.status?.message || "Failed to fetch" })
   }
 }
