@@ -11,7 +11,7 @@ export default function Welcome({ getScript, theme }) {
       <div>
         <h1>{script.title}</h1>
       </div>
-      <div>
+      <div className="desc">
         <h2>{script.desc}</h2>
         <p>{script.meeting[1]}</p>
         <button
@@ -27,7 +27,16 @@ export default function Welcome({ getScript, theme }) {
       <style jsx>
         {`
           .welcome {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             text-align: center;
+            background-color: ${theme.background.primary};
+            color: ${theme.text.primary};
+            padding: 10px;
+            border-radius: 15px;
+          }
+          .desc {
             background-color: ${theme.background.secundary};
             color: ${theme.text.secundary};
             padding: 10px;
