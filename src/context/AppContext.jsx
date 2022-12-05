@@ -27,11 +27,12 @@ const getDeviceType = (windowWidth) => {
   return device
 }
 
+const getActualVersion = (versions) => versions[0]
+
 export function AppProvider({ children }) {
   const { response: gameVersion } = useFetch(
     "https://ddragon.leagueoflegends.com/api/versions.json",
-    undefined,
-    (versions) => versions[0]
+    getActualVersion
   )
   const [themeName, setThemeName] = useLocalStorage("theme", "black")
   const [language, setLanguage] = useLocalStorage("lang", "en_US")

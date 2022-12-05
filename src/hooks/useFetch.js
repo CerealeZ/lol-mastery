@@ -7,11 +7,10 @@ const responseFormat = {
   isOkay: undefined,
 }
 
-const useFetch = (url, initialData = undefined, callback) => {
-  const [response, setResponse] = useState(initialData || responseFormat)
+const useFetch = (url, callback) => {
+  const [response, setResponse] = useState(responseFormat)
   const [isLoading, setLoading] = useState(true)
   const fetch = useCallback(async () => {
-    setResponse(responseFormat)
     if (!url) return
     try {
       setLoading(true)
@@ -33,7 +32,7 @@ const useFetch = (url, initialData = undefined, callback) => {
     } finally {
       setLoading(false)
     }
-  }, [url, initialData])
+  }, [url, callback])
 
   useEffect(() => {
     fetch()
