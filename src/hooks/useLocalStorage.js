@@ -4,11 +4,14 @@ export default function useLocalStorage(token, defaultState) {
   const [state, setState] = useState(defaultState)
   const isObject = typeof defaultState === "object"
 
-  useEffect(function getFromLocal() {
-    const tokenData = localStorage.getItem(token)
-    if (!tokenData) return
-    setState(isObject ? JSON.parse(tokenData) : tokenData)
-  }, [])
+  useEffect(
+    function getFromLocal() {
+      const tokenData = localStorage.getItem(token)
+      if (!tokenData) return
+      setState(isObject ? JSON.parse(tokenData) : tokenData)
+    },
+    [isObject, token]
+  )
 
   const setNewState = (state) => {
     setState(state)
