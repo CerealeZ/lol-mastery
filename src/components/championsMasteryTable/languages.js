@@ -16,7 +16,9 @@ const en_US = {
   chest: "Chest Granted",
 }
 
-export default {
+const languages = {
   es_MX,
   en_US,
 }
+
+export default languages

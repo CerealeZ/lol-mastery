@@ -5,7 +5,7 @@ export const es_MX = {
   tier: {
     title: "Rango",
     tiers: {
-      CHALLENGER:"Retador",
+      CHALLENGER: "Retador",
       GRANDMASTER: "Gran Maestro",
       MASTER: "Maestro",
       DIAMOND: "Diamante",
@@ -17,9 +17,9 @@ export const es_MX = {
     },
   },
   points: "Puntos de liga:",
-  winrate:"Porcentaje de victoria:",
-  wins:"Victorias:",
-  losses:"Derrotas:"
+  winrate: "Porcentaje de victoria:",
+  wins: "Victorias:",
+  losses: "Derrotas:",
 }
 
 export const en_US = {
@@ -40,12 +40,14 @@ export const en_US = {
     },
   },
   points: "League Points:",
-  winrate:"Winrate",
-  wins:"Wins:",
-  losses:"Losses:"
+  winrate: "Winrate",
+  wins: "Wins:",
+  losses: "Losses:",
 }
 
-export default {
+const languages = {
   es_MX,
   en_US,
 }
+
+export default languages

@@ -6,7 +6,9 @@ export const en_US = {
   placeholder: "Summoner's name",
 }
 
-export default {
+const languages = {
   es_MX,
   en_US,
 }
+
+export default languages

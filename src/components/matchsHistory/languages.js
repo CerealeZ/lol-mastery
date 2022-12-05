@@ -32,7 +32,9 @@ const en_US = {
   },
 }
 
-export default {
+const languages = {
   es_MX,
   en_US,
 }
+
+export default languages

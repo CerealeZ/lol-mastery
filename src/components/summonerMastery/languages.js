@@ -16,7 +16,9 @@ const en_US = {
   },
 }
 
-export default {
-  en_US,
+const languages = {
   es_MX,
+  en_US,
 }
+
+export default languages

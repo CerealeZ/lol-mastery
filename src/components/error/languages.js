@@ -16,23 +16,25 @@ const es_MX = {
 }
 
 const en_US = {
-    status: {
-      404: {
-        title: "Not found",
-        desc: "There is no data",
-      },
-      429: {
-        title: "Riot Api Failed",
-        desc: "Too many requests in short time. Reload Component",
-      },
-      default: {
-        title: "General Error",
-        desc: "Check your internet",
-      },
+  status: {
+    404: {
+      title: "Not found",
+      desc: "There is no data",
     },
-  }
-
-export default {
-  es_MX,
-  en_US
+    429: {
+      title: "Riot Api Failed",
+      desc: "Too many requests in short time. Reload Component",
+    },
+    default: {
+      title: "General Error",
+      desc: "Check your internet",
+    },
+  },
 }
+
+const languages = {
+  es_MX,
+  en_US,
+}
+
+export default languages

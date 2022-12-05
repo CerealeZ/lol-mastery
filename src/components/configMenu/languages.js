@@ -10,7 +10,9 @@ export const en_US = {
   themes: "Theme",
 }
 
-export default {
+const languages = {
   es_MX,
   en_US,
 }
+
+export default languages
