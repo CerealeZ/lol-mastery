@@ -1,23 +1,23 @@
 import useFetch from "src/hooks/useFetch"
 import scripts from "./languages"
 import Image from "next/image"
-import Error from "src/components/error"
 
 export default function SummonerRank({
   summonerInfo: { region, id },
-  language,
-  LoadingComponent,
+  getScript,
+  Loading,
+  Error
 }) {
   const { response, isLoading, reload } = useFetch(
     `/api/summoner-rank?region=${region}&id=${id}`
   )
-  const script = scripts[language]
+  const script = getScript(scripts)
 
   return (
-    <section className="profileBlock profileBlock--section">
+    <section>
       <h2>{script.title}</h2>
       {isLoading ? (
-        <LoadingComponent />
+        <Loading />
       ) : response.isOkay ? (
         response.data.map(
           (
@@ -33,8 +33,8 @@ export default function SummonerRank({
             },
             index
           ) => (
-            <div key={index} className="profileBlock__child">
-              <h2>{script[queueType]}</h2>
+            <article key={index}>
+              <h3>{script[queueType]}</h3>
               <div className="queueBox__details">
                 <div>
                   <Image
@@ -46,9 +46,9 @@ export default function SummonerRank({
                 </div>
                 <div className="queueBox__textBox">
                   <div className="queueBox__titleBox">
-                    <h3>
+                    <p>
                       {script.tier.tiers[tier] || tier} {rank}
-                    </h3>
+                    </p>
                     <p>
                       {!miniSeriesProgress
                         ? `${leaguePoints} ${"LP"}`
@@ -68,11 +68,11 @@ export default function SummonerRank({
                   </div>
                 </div>
               </div>
-            </div>
+            </article>
           )
         )
       ) : (
-        <Error status={response.status} language={language} reload={reload} />
+        <Error status={response.status} reload={reload} />
       )}
       <style jsx>{`
         .queueBox__details {

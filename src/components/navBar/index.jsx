@@ -1,6 +1,9 @@
-import { buttons } from "./buttons.js"
-
-export default function NavBar({ setComponent, actualComponent }) {
+export default function NavBar({
+  setComponent,
+  actualComponent,
+  buttons,
+  theme,
+}) {
   return (
     <div className={"navBar"}>
       {buttons.map(({ title, icon, value }, index) => {
@@ -18,32 +21,29 @@ export default function NavBar({ setComponent, actualComponent }) {
         )
       })}
 
-      <style>
+      <style jsx>
         {`
           .navBar {
             display: flex;
-            width: 100vw;
             overflow: auto;
             height: 50px;
-            background-color: var(--cardBack);
-            color: var(--cardText);
-            /* border-top: 1px solid #fffffe; */
-            /* justify-content: center; */
+            background-color: ${theme.background.secundary};
+            color: ${theme.text.secundary};
           }
-          
+
           .navBar__button {
             display: flex;
             justify-content: center;
             align-items: center;
             flex: none;
             width: 22%;
-            /* border-right: 1px solid #fffffe; */
           }
-          
+
           .navBar__button--selected {
-            background-color: var(--btnBack);
-            color: var(--btnText);
-          }`}
+            background-color: ${theme.button.normal.backgroundColor};
+            color: ${theme.button.normal.color};
+          }
+        `}
       </style>
     </div>
   )

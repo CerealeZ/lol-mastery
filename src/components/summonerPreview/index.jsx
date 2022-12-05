@@ -1,13 +1,11 @@
 import Image from "next/image"
 
 export default function SummonerPreview({
-  name,
-  profileIconId,
-  summonerLevel,
+  summonerInfo: { name, profileIconId, summonerLevel },
   gameVersion,
 }) {
   return (
-    <header className="profileBlock profileBlock--header">
+    <header>
       <Image
         height={50}
         width={50}
@@ -16,14 +14,13 @@ export default function SummonerPreview({
       />
       <div className="data">
         <h1>{name}</h1>
-        <span>LvL: {summonerLevel}</span>
+        <p>LvL: {summonerLevel}</p>
       </div>
-
       <style jsx>
         {`
-          .data {
+          header {
             display: flex;
-            flex-direction: column;
+            gap: 15px;
           }
         `}
       </style>

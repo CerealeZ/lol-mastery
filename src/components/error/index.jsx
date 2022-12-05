@@ -1,13 +1,13 @@
 import scripts from "./languages"
 
-export default function Error({ reload, language, status }) {
-  const script = scripts[language]
+export default function Error({ reload, status, theme, getScript }) {
+  const script = getScript(scripts)
   const errorScript = script.status[status] || script.status.default
 
   return (
     <div className={"errorCard"}>
       <div className={"errorCard__text"}>
-        <h2>{`${errorScript.title} `}</h2>
+        <h2>{errorScript.title}</h2>
         <h3>{errorScript.desc}</h3>
         <h3>{`Error ${status}`}</h3>
         {reload && (
@@ -20,26 +20,17 @@ export default function Error({ reload, language, status }) {
       <style jsx>
         {`
           .errorCard {
-            font-family: RobotoNormal;
             padding: 15px;
-            background-color: var(--back);
+            color: ${theme.text.primary};
+            background-color: ${theme.background.primary};
           }
 
           .errorCard__text {
-            background-color: var(--cardBack);
-            color: var(--cardText);
+            color: ${theme.text.secundary};
+            background-color: ${theme.background.secundary};
             text-align: center;
             border-radius: 15px;
             padding: 10px;
-          }
-
-          .errorCard__btn {
-            background-color: var(--btnBack);
-            color: var(--btnText);
-            padding: 10px;
-            border-radius: 15px;
-            border-width: 1px;
-            border-color: transparent;
           }
         `}
       </style>

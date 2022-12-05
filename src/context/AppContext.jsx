@@ -1,12 +1,19 @@
 import { createContext, useState, useEffect } from "react"
 import useFetch from "src/hooks/useFetch"
-import themes from "./themes.module.css"
+import getTheme from "src/context/colors"
+import useLocalStorage from "src/hooks/useLocalStorage"
 
 const AppContext = createContext()
 
 const devices = {
   desktop: 1024,
   mobile: 600,
+}
+
+const scriptSelector = function setLanguage(language, defaultLanguage) {
+  return function setScriptFile(script) {
+    return script[language] || script[defaultLanguage]
+  }
 }
 
 const getDeviceType = (windowWidth) => {
@@ -20,74 +27,48 @@ const getDeviceType = (windowWidth) => {
   return device
 }
 
-const localStoreHelper = (key, setter) => (method, newValue) => {
-  const methodCase = {
-    get: () => {
-      const value = localStorage.getItem(key)
-      setter(value || newValue)
-    },
-    set: () => {
-      localStorage.setItem(key, newValue)
-      setter(newValue)
-    },
-  }
-  methodCase[method]()
-}
-
 export function AppProvider({ children }) {
   const { response: gameVersion } = useFetch(
     "https://ddragon.leagueoflegends.com/api/versions.json",
     undefined,
     (versions) => versions[0]
   )
-  const [theme, setTheme] = useState(0)
-  const themeHelper = localStoreHelper("theme", setTheme)
-
-  const [language, setLanguage] = useState("")
-  const languageHelper = localStoreHelper("lang", setLanguage)
-
+  const [themeName, setThemeName] = useLocalStorage("theme", "black")
+  const [language, setLanguage] = useLocalStorage("lang", "en_US")
   const [device, setDevice] = useState("")
 
   useEffect(function getDataFromUser() {
-    const getUserLanguage = () => {
-      languageHelper("get", "en_US")
-    }
-    const getUserTheme = () => {
-      themeHelper("get", 1)
-    }
     const getDevice = () => {
       setDevice(getDeviceType(window.innerWidth))
       window.onresize = () => setDevice(getDeviceType(window.innerWidth))
     }
 
     getDevice()
-    getUserLanguage()
-    getUserTheme()
   }, [])
 
-  const setNewLanguage = (language) => {
-    languageHelper("set", language)
-  }
-  const setNewTheme = (theme) => {
-    themeHelper("set", theme)
-  }
+  const theme = getTheme(themeName)
 
   return (
     <AppContext.Provider
       value={{
         gameVersion: gameVersion?.data,
         language,
-        setNewLanguage,
-        setNewTheme,
+        setNewLanguage: setLanguage,
         theme,
+        setNewThemeName: setThemeName,
+        themeName,
         device,
         devices,
+        getScript: scriptSelector(language, "en_US"),
       }}
     >
-      <div className={themes[`theme${theme}`]}>
+      <div>
         {gameVersion?.isOkay && children}
         <style jsx global>
           {`
+            * {
+              font-family: RobotoNormal;
+            }
             p,
             span,
             h1,
@@ -97,40 +78,6 @@ export function AppProvider({ children }) {
             h3 {
               margin: 0;
               padding: 0;
-              font-family: RobotoNormal;
-            }
-
-            .box {
-              padding: 10px;
-              border-radius: 15px;
-            }
-
-            .profileBlock {
-              display: flex;
-              background-color: var(--back);
-              color: var(--text);
-            }
-
-            .profileBlock--section {
-              flex-direction: column;
-              padding: 5px;
-              gap: 5px;
-            }
-
-            .profileBlock--header {
-              flex-direction: row;
-              gap: 10px;
-            }
-
-            .profileBlock__child {
-              padding: 10px;
-              background-color: var(--cardBack);
-              color: var(--cardText);
-              border-radius: 15px;
-            }
-
-            .profileBlock__child--contracted {
-              align-self: start;
             }
 
             .centered {
@@ -144,36 +91,13 @@ export function AppProvider({ children }) {
             }
 
             .btn {
-              background-color: var(--btnBack);
-              color: var(--btnText);
+              background-color: ${theme.button.normal.backgroundColor};
+              color: ${theme.button.normal.color};
               padding: 10px;
               border-radius: 15px;
               border-width: 1px;
               border-color: transparent;
               cursor: pointer;
-            }
-
-            @media (min-width: ${devices.desktop}px) {
-              .profileBlock {
-                border-radius: 15px;
-                padding: 10px;
-              }
-              .profileBlock--section {
-                gap: 10px;
-                background-color: var(--cardBack);
-                color: var(--cardText);
-              }
-
-              .profileBlock--header {
-                background-color: var(--cardBack);
-                color: var(--cardText);
-                gap: 10px;
-              }
-
-              .profileBlock__child {
-                background-color: var(--back);
-                color: var(--text);
-              }
             }
           `}
         </style>

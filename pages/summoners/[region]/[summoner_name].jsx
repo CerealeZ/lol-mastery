@@ -5,7 +5,6 @@ import AppContext from "src/context/AppContext"
 import useFetch from "src/hooks/useFetch"
 import SummonerPreview from "src/components/summonerPreview"
 import NavBar from "src/components/navBar"
-
 import SummonerRank from "src/components/summonerRank"
 import SummonerMastery from "src/components/summonerMastery"
 import MatchHistory from "src/components/matchsHistory"
@@ -13,37 +12,35 @@ import Loading from "src/components/loading"
 import Error from "src/components/error"
 import SummonerProfileTemplate from "src/templates/summonerProfile"
 
-const renderSummonerTab = (type, props) => {
-  const componentCase = {
-    rank: SummonerRank,
-    history: MatchHistory,
-    mastery: SummonerMastery,
-  }
-  const FinalComponent = componentCase[type]
-  return <FinalComponent {...props} />
+const getStatus = ({ isLoading, isError }) => {
+  if (isLoading) return "loading"
+  if (isError) return "error"
+  return "fine"
 }
 
 export default function SummonerProfile() {
   const { summoner_name, region } = useRouter().query
-  const { language, gameVersion, device, devices } = useContext(AppContext)
+  const { getScript, gameVersion, device, theme } = useContext(AppContext)
   const {
     response: summonerInfo,
     isLoading,
     reload,
   } = useFetch(
-    summoner_name && region
-      ? `/api/summoner-info?name=${summoner_name}&region=${region}`
-      : ""
+    summoner_name &&
+      region &&
+      `/api/summoner-info?name=${summoner_name}&region=${region}`
   )
-  const [component, setComponent] = useState("rank")
-
+  const [actualComponent, setActualComponent] = useState("ranks")
   const basicComponentProps = {
     summonerInfo: summonerInfo.data,
-    language,
-    gameVersion,
-    LoadingComponent: Loading,
+    getScript,
     device,
-    devices,
+    gameVersion,
+    theme,
+    Loading: () => <Loading theme={theme} />,
+    Error: (props) => (
+      <Error language={language} getScript={getScript} {...props}></Error>
+    ),
   }
 
   return (
@@ -54,36 +51,52 @@ export default function SummonerProfile() {
 
       <SummonerProfileTemplate
         device={device}
-        devices={devices}
-        profileViewer={
-          <SummonerPreview
-            {...summonerInfo.data}
-            gameVersion={gameVersion}
-            language={language}
-            LoadingComponent={<Loading />}
+        theme={theme}
+        onLoading={<Loading theme={theme} />}
+        onError={
+          <Error
+            theme={theme}
+            status={summonerInfo.status}
+            getScript={getScript}
+            reload={summonerInfo.status !== 404 && reload}
           />
         }
-        navigation={
-          <NavBar actualComponent={component} setComponent={setComponent} />
-        }
-        loading={isLoading && <Loading />}
-        error={
-          !summonerInfo.isOkay && (
-            <Error
-              status={summonerInfo.status}
-              language={language}
-              reload={summonerInfo.status !== 404 && reload}
-            />
-          )
-        }
+        status={getStatus({
+          isError: !summonerInfo.isOkay,
+          isLoading: isLoading,
+        })}
         components={{
+          profile: <SummonerPreview {...basicComponentProps} />,
+          navigation: (
+            <NavBar
+              actualComponent={actualComponent}
+              theme={theme}
+              buttons={[
+                {
+                  title: "Rank",
+                  value: "ranks",
+                  icon: "fa-solid fa-ranking-star",
+                },
+                {
+                  title: "Matchs",
+                  value: "matchs",
+                  icon: "fa-regular fa-file-lines",
+                },
+                {
+                  title: "Champion Ranking",
+                  value: "masteries",
+                  icon: "fa-solid fa-medal",
+                },
+              ]}
+              setComponent={setActualComponent}
+            />
+          ),
           ranks: <SummonerRank {...basicComponentProps} />,
           matchs: <MatchHistory {...basicComponentProps} />,
           masteries: <SummonerMastery {...basicComponentProps} />,
         }}
-      >
-        {renderSummonerTab(component, basicComponentProps)}
-      </SummonerProfileTemplate>
+        actualComponent={actualComponent} // Usually for mobile
+      />
     </>
   )
 }

@@ -1,4 +1,4 @@
-export default function Loading() {
+export default function Loading({ theme }) {
   return (
     <div className={"ldsContainer"}>
       <div className={"lds-ring"}>
@@ -29,10 +29,10 @@ export default function Loading() {
             width: 64px;
             height: 64px;
             margin: 8px;
-            border: 8px solid var(--cardText);
+            border: 8px solid ${theme.text.secundary};
             border-radius: 50%;
             animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-            border-color: var(--cardText) transparent transparent transparent;
+            border-color: ${theme.text.secundary} transparent transparent transparent;
           }
           .lds-ring .child :nth-child(1) {
             animation-delay: -0.45s;

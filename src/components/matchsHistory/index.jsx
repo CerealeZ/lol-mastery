@@ -1,147 +1,125 @@
 import Image from "next/image"
 import useFetch from "src/hooks/useFetch"
 import scripts from "./languages"
-import Error from "src/components/error"
 
 export default function MatchHistory({
   summonerInfo,
   gameVersion,
-  language,
-  LoadingComponent,
+  getScript,
+  Loading,
+  Error,
 }) {
   const { response, isLoading, reload } = useFetch(
     `/api/summoner-matchs?puuid=${summonerInfo.puuid}&region=${summonerInfo.region}`
   )
 
-  const script = scripts[language]
+  const script = getScript(scripts)
 
   return (
-    <section className="profileBlock profileBlock--section">
+    <section>
       <h2>{script.title}</h2>
       {isLoading ? (
-        <LoadingComponent />
+        <Loading />
       ) : response.isOkay ? (
-        <>
-          <div className={"matchList "}>
-            {response.data.map(
-              (
-                {
-                  isOkay,
-                  data: {
-                    championName,
-                    kills,
-                    deaths,
-                    assists,
-                    win,
-                    itemIds,
-                    queueId,
-                  },
-                },
-                index
-              ) => {
-                if (!isOkay) {
-                  return (
-                    // TODO: Do a better error component
-                    <div key={index}>
-                      <p>Not data found, maybe too many requests</p>
-                    </div>
-                  )
-                }
+        response.data.map(
+          (
+            {
+              isOkay,
+              data: {
+                championName,
+                kills,
+                deaths,
+                assists,
+                win,
+                itemIds,
+                queueId,
+              },
+            },
+            index
+          ) => {
+            if (!isOkay) {
+              return (
+                // TODO: Do a better error component
+                <div key={index}>
+                  <p>Not data found, maybe too many requests</p>
+                </div>
+              )
+            }
 
-                return (
-                  <div className={`match profileBlock__child`} key={index}>
-                    <div>
-                      <Image
-                        width={100}
-                        height={100}
-                        src={`https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/champion/${championName}.png`}
-                        alt={championName}
-                      ></Image>
-                    </div>
-                    <div
-                      style={{
-                        minWidth: "5rem",
-                      }}
-                      className={""}
-                    >
-                      <p className={"match__box__text"}>
-                        {win ? (
-                          <span
-                            style={{
-                              color: "#9e9eff",
-                            }}
-                          >
-                            {script.result.win}
-                          </span>
-                        ) : (
-                          <span
-                            style={{
-                              color: "red",
-                            }}
-                          >
-                            {script.result.loss}
-                          </span>
-                        )}
-                      </p>
-                      <p className={"match__box__text"}>
-                        {script.queues[queueId]}
-                      </p>
-                      <p
-                        className={"match__box__text"}
-                      >{`${kills} / ${deaths} / ${assists}`}</p>
-                    </div>
-                    <div className={"match__box"}>
-                      {itemIds.map((id, index) => (
-                        <Image
-                          key={index}
-                          src={
-                            id
-                              ? `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/item/${id}.png`
-                              : `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/spell/Summoner_UltBookPlaceholder.png`
-                          }
-                          alt={""}
-                          height={35}
-                          width={35}
-                        />
-                      ))}
-                    </div>
+            return (
+              <article key={index}>
+                <div className={`match`} key={index}>
+                  <div>
+                    <Image
+                      width={100}
+                      height={100}
+                      src={`https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/champion/${championName}.png`}
+                      alt={championName}
+                    ></Image>
                   </div>
-                )
-              }
-            )}
-          </div>
-        </>
+                  <div
+                    style={{
+                      minWidth: "5rem",
+                    }}
+                    className={""}
+                  >
+                    <p className={"match__text"}>
+                      {win ? (
+                        <span
+                          style={{
+                            color: "#9e9eff",
+                          }}
+                        >
+                          {script.result.win}
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            color: "red",
+                          }}
+                        >
+                          {script.result.loss}
+                        </span>
+                      )}
+                    </p>
+                    <p className={"match__text"}>{script.queues[queueId]}</p>
+                    <p
+                      className={"match__text"}
+                    >{`${kills} / ${deaths} / ${assists}`}</p>
+                  </div>
+                  <div className={"match__box"}>
+                    {itemIds.map((id, index) => (
+                      <Image
+                        key={index}
+                        src={
+                          id
+                            ? `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/item/${id}.png`
+                            : `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/img/spell/Summoner_UltBookPlaceholder.png`
+                        }
+                        alt={""}
+                        height={35}
+                        width={35}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </article>
+            )
+          }
+        )
       ) : (
-        <Error status={response.status} language={language} reload={reload} />
+        <Error status={response.status} reload={reload} />
       )}
-
       <style jsx>
         {`
-          .matchList {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-           
-          }
-
           .match {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            --borderRadius: 15px;
           }
 
-          .match:first-child {
-            border-top-right-radius: var(--borderRadius);
-            border-top-left-radius: var(--borderRadius);
-          }
-          .match:last-child {
-            border-bottom-right-radius: var(--borderRadius);
-            border-bottom-left-radius: var(--borderRadius);
-          }
-
-          .match__box__text {
+          .match__text {
             text-align: center;
           }
         `}

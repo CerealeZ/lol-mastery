@@ -3,17 +3,15 @@ import scripts from "./languages"
 
 const MY_SUMMONER_QUERY = "la1/Rolling+Typhoon"
 
-export default function Welcome({ language }) {
+export default function Welcome({ getScript, theme }) {
   const router = useRouter()
-  const script = scripts[language]
-
-  if (!script) return <></>
+  const script = getScript(scripts)
   return (
     <div className={"welcome"}>
-      <div className={"box box--primary"}>
+      <div>
         <h1>{script.title}</h1>
       </div>
-      <div className={"box box--secundary"}>
+      <div>
         <h2>{script.desc}</h2>
         <p>{script.meeting[1]}</p>
         <button
@@ -30,6 +28,10 @@ export default function Welcome({ language }) {
         {`
           .welcome {
             text-align: center;
+            background-color: ${theme.background.secundary};
+            color: ${theme.text.secundary};
+            padding: 10px;
+            border-radius: 15px;
           }
         `}
       </style>

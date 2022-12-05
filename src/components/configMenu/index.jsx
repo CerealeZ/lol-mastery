@@ -2,8 +2,9 @@ import scripts from "./languages"
 
 export default function ConfigMenu({
   setNewLanguage,
-  setNewTheme,
+  setNewThemeName,
   theme,
+  themeName,
   language,
 }) {
   const script = scripts[language]
@@ -24,14 +25,11 @@ export default function ConfigMenu({
         <label>{script.themes}</label>
         <select
           className={"form__input"}
-          defaultValue={theme}
-          onChange={(e) => setNewTheme(e.target.value)}
+          defaultValue={themeName}
+          onChange={(e) => setNewThemeName(e.target.value)}
         >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
+          <option value={"black"}>Night</option>
+          <option value={"white"}>Day</option>
         </select>
       </div>
 
@@ -41,16 +39,15 @@ export default function ConfigMenu({
             display: flex;
             flex-direction: column;
             gap: 20px;
-            background-color: var(--back);
-            color: var(--text);
-            font-family: RobotoNormal;
+            background-color: ${theme.background.primary};
+            color: ${theme.text.primary};
           }
 
           .form__box {
             display: flex;
             flex-direction: column;
-            background-color: var(--cardBack);
-            color: var(--cardText);
+            background-color: ${theme.background.secundary});
+            color: ${theme.text.secundary};
             border-radius: 30px;
             padding: 20px;
             gap: 20px;
