@@ -22,7 +22,7 @@ export default function SummonerMastery({
         <>
           <article>
             <h3>{script.generalStats.playedChampions}</h3>
-            <p>{summonerMastery.championsMastery.length}</p>
+            <p>{summonerMastery.totalChampionsPlayed}</p>
           </article>
           <article>
             <h3>{script.generalStats.totalPoints}</h3>
@@ -30,7 +30,7 @@ export default function SummonerMastery({
           </article>
           <article>
             <h3>{script.generalStats.chestsGranted}</h3>
-            <p>{summonerMastery.chestsEarned.got}</p>
+            <p>{summonerMastery.totalChestsEarned}</p>
           </article>
         </>
       ) : (

@@ -1,21 +1,10 @@
 import axios from "axios"
 
-const getNewMasteryCount = (previousMasteryCount, championLevel) => {
-  const count = (previousMasteryCount[championLevel] ?? 0) + 1
-  return {
-    ...previousMasteryCount,
-    [championLevel]: count,
-  }
+const countChestsEarned = (previousChestCount, chestGranted) => {
+  return previousChestCount + (chestGranted ? 1 : 0)
 }
 
-const getChestEarned = (previousChestCount, chestGranted) => {
-  return {
-    ...previousChestCount,
-    got: previousChestCount.got + (chestGranted ? 1 : 0),
-  }
-}
-
-const getTotalSummonerMastery = (previousMasteryCount, championLevel) => {
+const countSummonerMasteryLevel = (previousMasteryCount, championLevel) => {
   return previousMasteryCount + championLevel
 }
 
@@ -28,39 +17,26 @@ export default async function getSummonerMastery(req, res) {
       `https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${process.env.RIOT_API}`
     )
 
-    const masteryStuff = summonerMastery.reduce(
-      (prev, { championLevel, chestGranted }) => {
-        return {
-          masteryCounts: getNewMasteryCount(prev.masteryCounts, championLevel),
-          chestsEarned: getChestEarned(prev.chestsEarned, chestGranted),
-          totalSummonerMastery: getTotalSummonerMastery(
-            prev.totalSummonerMastery,
-            championLevel
-          ),
-        }
-      },
+    const masteryResume = summonerMastery.reduce(
+      (prev, { championLevel, chestGranted }) => ({
+        totalSummonerMastery: countSummonerMasteryLevel(
+          prev.totalSummonerMastery,
+          championLevel
+        ),
+        totalChestsEarned: countChestsEarned(
+          prev.totalChestsEarned,
+          chestGranted
+        ),
+      }),
       {
-        masteryCounts: {
-          7: 0,
-          6: 0,
-          5: 0,
-          4: 0,
-          3: 0,
-          2: 0,
-          1: 0,
-        },
         totalSummonerMastery: 0,
-        chestsEarned: {
-          got: 0,
-          total: summonerMastery.length,
-        },
+        totalChestsEarned: 0,
       }
     )
 
-    res.status(200).json({
-      championsMastery: summonerMastery,
-      ...masteryStuff,
-    })
+    res
+      .status(200)
+      .json({ totalChampionsPlayed: summonerMastery.length, ...masteryResume })
   } catch (error) {
     const { response } = error
     res.status(response?.status || 500).json(error)
