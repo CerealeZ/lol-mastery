@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import scripts from "./languages"
 
-const MY_SUMMONER_QUERY = "la1/Rolling+Typhoon"
+const MY_SUMMONER_QUERY = "la1/Rolling%20Typhoon"
 
 export default function Welcome({ getScript, theme }) {
   const router = useRouter()
