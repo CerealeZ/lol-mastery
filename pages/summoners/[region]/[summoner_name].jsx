@@ -10,7 +10,7 @@ import SummonerMastery from "src/components/summonerMastery"
 import MatchHistory from "src/components/matchsHistory"
 import Loading from "src/components/loading"
 import Error from "src/components/error"
-import SummonerProfileTemplate from "src/templates/summonerProfile"
+import SummonerProfileTemplate from "src/layouts/summonerProfile"
 
 const getStatus = ({ isLoading, isError }) => {
   if (isLoading) return "loading"

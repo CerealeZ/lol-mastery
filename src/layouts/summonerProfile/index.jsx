@@ -1,4 +1,4 @@
-export default function Summonerlayout({
+export default function SummonerProfileLayout({
   status,
   onLoading,
   onError,

@@ -1,4 +1,4 @@
-export default function WelcomeTemplate({ children, devices }) {
+export default function WelcomeLayout({ children, devices }) {
   return (
     <div className="welcome-template">
       {children}
