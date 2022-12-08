@@ -1,5 +1,5 @@
 import Head from "next/head"
-import Welcome from "src/components/Welcome"
+import Welcome from "src/components/welcome"
 import { useContext } from "react"
 import AppContext from "src/context/AppContext"
 import WelcomeLayout from "src/layouts/welcome"
@@ -17,5 +17,3 @@ export default function Home() {
     </>
   )
 }
-
-const pepito = [2,34].reduce(prev => prev)
