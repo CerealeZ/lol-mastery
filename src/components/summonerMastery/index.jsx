@@ -43,6 +43,10 @@ export default function SummonerMastery({
             display: flex;
             align-items: baseline;
           }
+          article p {
+            margin-left: auto;
+            font-weight: bold;
+          }
         `}
       </style>
     </section>
