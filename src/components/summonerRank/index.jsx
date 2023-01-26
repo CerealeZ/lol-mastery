@@ -6,7 +6,7 @@ export default function SummonerRank({
   summonerInfo: { region, id },
   getScript,
   Loading,
-  Error
+  Error,
 }) {
   const { response, isLoading, reload } = useFetch(
     `/api/summoner-rank?region=${region}&id=${id}`
@@ -72,7 +72,10 @@ export default function SummonerRank({
           )
         )
       ) : (
-        <Error status={response.status} reload={reload} />
+        <Error
+          status={response.status}
+          reload={response.status !== 404 && reload}
+        />
       )}
       <style jsx>{`
         .queueBox__details {

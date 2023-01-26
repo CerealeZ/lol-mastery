@@ -13,6 +13,7 @@ const es_MX = {
     700: "Clash",
     1400: "Libro de hechizos abiertos",
   },
+  error: "Hubo un error consiguiendo esta partida.",
 }
 
 const en_US = {
@@ -30,6 +31,7 @@ const en_US = {
     700: "Clash",
     1400: "Ultimate Spell Book",
   },
+  error: "There is an error fetching this match.",
 }
 
 const languages = {
