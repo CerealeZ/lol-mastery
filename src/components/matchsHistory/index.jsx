@@ -39,10 +39,10 @@ export default function MatchHistory({
           ) => {
             if (!isOkay) {
               return (
-                // TODO: Do a better error component
-                <div key={index}>
-                  <p>Not data found, maybe too many requests</p>
-                </div>
+                // TODO Make a better error component
+                <article key={index}>
+                  <p>{script.error}</p>
+                </article>
               )
             }
 
