@@ -11,10 +11,16 @@ export default async function summonerRank(req, res) {
   const { region, id } = req.query
   try {
     const { data: response } = await axios.get(
-      `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${
-        process.env.RIOT_API
-      }`
+      `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${process.env.RIOT_API}`
     )
+
+    if (!response.length) {
+      res.status(404).json({
+        msg: "This player didn't play rankeds this season",
+      })
+      return
+    }
+
     const ranks = response.map((rankInfo) => {
       const { wins, losses, miniSeries } = rankInfo
       const totalRankedMatchs = wins + losses
